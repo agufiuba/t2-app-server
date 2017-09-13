@@ -5,7 +5,6 @@ from .main.position.position_controller import position_controller
 from .main.drivers.drivers_controller import drivers_controller
 from .main.path.path_controller import path_controller
 
-
 app = Flask(__name__)
 
 app.register_blueprint(user_controller);
