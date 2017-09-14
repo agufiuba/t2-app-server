@@ -14,8 +14,8 @@ RUNDIR=$(dirname $SOCKFILE)
 test -d $RUNDIR || mkdir -p $RUNDIR
 
 # Start your gunicorn
-exec gunicorn main:app -b 0.0.0.0:8080 \
-  --name $NAME \
-  --workers $NUM_WORKERS \
-  --user=$USER --group=$GROUP \
-  --bind=unix:$SOCKFILE
+#exec gunicorn main:app -b 0.0.0.0:3000 \
+#  --name $NAME \
+#  --workers $NUM_WORKERS \
+#  --user=$USER --group=$GROUP \
+#  --bind=unix:$SOCKFILE
