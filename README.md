@@ -43,3 +43,7 @@ Se utilizara para permitir conocer los caminos disponibles.
 + /position
 + /drivers
 + /path
+
+
+
+[![Coverage Status](https://coveralls.io/repos/github/agufiuba/t2-app-server/badge.svg?branch=master)](https://coveralls.io/github/agufiuba/t2-app-server?branch=master)
