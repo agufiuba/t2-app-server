@@ -1,5 +1,3 @@
-[![Coverage Status](https://coveralls.io/repos/github/agufiuba/t2-app-server/badge.svg?branch=master)](https://coveralls.io/github/agufiuba/t2-app-server?branch=master)
-
 # t2-app-server
 
 ## Servicios disponibles
