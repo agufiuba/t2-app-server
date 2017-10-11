@@ -2,6 +2,12 @@
 
 # t2-app-server
 
+
+## Lanza app
+- export PORT=3000
+- docker-compose build
+- docker-compose up
+
 ## Servicios disponibles
 
 ### Servicio de usuario
@@ -37,11 +43,11 @@ Este se encarga todo respecto al usuario, registro, etc.
 
 + Verbo REST: PUT
 + Body:
-            {
-              email: 'julano.casandro@gmail',
-              ...
-              ....
-            }
+              {
+                email: 'julano.casandro@gmail',
+                ...
+                ....
+              }
 
 Los puntos suspensivos serian los datos que se quieren actualizar
 
