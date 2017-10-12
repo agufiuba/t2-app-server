@@ -12,4 +12,4 @@ def root_service():
     db = client.t2
     result = db.users.find()
 
-    return str([str(doc) for doc in db.users.find()])
+    return "{" + str([str(doc) for doc in db.users.find()]) + "}"
