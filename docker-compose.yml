@@ -4,7 +4,7 @@ services:
     build:
       context: mdb
     ports:
-      - "5432:5432"
+      - "27017:27017"
 
   app-server:
     build:
