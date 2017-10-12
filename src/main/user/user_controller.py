@@ -1,7 +1,6 @@
 from flask import Blueprint
 import logging
 
-
 FORMAT = "%(asctime)-15s %(clientip)s %(service)-8s %(message)s"
 
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -15,21 +14,21 @@ user_controller = Blueprint('controller',__name__)
 @user_controller.route('/user',methods = ['POST'])
 def add_user():
     logging.info('Se recibio un Request POST',extra=log_info)
-    return 'POST user OK'
+    return 'POST user OK',200
 
 
 @user_controller.route('/user',methods = ['PUT'])
 def update_user():
     logging.info('Se recibio un Request PUT',extra=log_info)
-    return 'PUT user OK'
+    return 'PUT user OK',200
 
 
 @user_controller.route('/user/<id>',methods = ['GET'])
 def see_user(id):
     logging.info('Se recibio un Request GET',extra=log_info)
-    return 'GET user OK'
+    return 'GET user OK',200
 
 @user_controller.route('/user/<id>',methods = ['DELETE'])
 def delete_user(id):
     logging.info('Se recibio un Request DELETE',extra=log_info)
-    return 'DELETE user OK'
+    return 'DELETE user OK',200
