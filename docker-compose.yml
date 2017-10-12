@@ -1,5 +1,11 @@
 version: "3"
 services:
+  mdb:
+    build:
+      context: mdb
+    ports:
+      - "5432:5432"
+
   app-server:
     build:
       context: .
@@ -13,3 +19,5 @@ services:
       - DATABASE_URL=$DATABASE_URL
     ports:
       - "3000:$PORT"
+    depends_on:
+      - mdb
