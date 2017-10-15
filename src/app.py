@@ -13,9 +13,6 @@ app.register_blueprint(drivers_controller);
 app.register_blueprint(travels_controller);
 app.register_blueprint(position_controller);
 
-@app.route("/")
-def hello():
-    return "Hello World!"
 
 if __name__ == "__main__":
     app.run()
