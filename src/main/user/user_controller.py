@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint,request
 import logging
 
 FORMAT = "%(asctime)-15s %(clientip)s %(service)-8s %(message)s"
@@ -14,6 +14,8 @@ user_controller = Blueprint('controller',__name__)
 @user_controller.route('/user',methods = ['POST'])
 def add_user():
     logging.info('Se recibio un Request POST',extra=log_info)
+    logging.info('User creado con nombre '+request.form['name']+' y apellido '+request.form['last_name']+'de tipo '+request.form['type'],extra = log_info)
+    logging.info('Otro log', extra = log_info)
     return 'POST user OK',200
 
 
@@ -27,6 +29,7 @@ def update_user():
 def see_user(id):
     logging.info('Se recibio un Request GET',extra=log_info)
     return 'GET user OK',200
+
 
 @user_controller.route('/user/<id>',methods = ['DELETE'])
 def delete_user(id):

@@ -8,6 +8,7 @@ ADD src /as/src/main
 ADD src /as/src/test
 ADD requirements.txt /as/requirements.txt
 
+
 RUN pip install --index-url=http://pypi.python.org/simple/ --trusted-host pypi.python.org -r requirements.txt
 
 EXPOSE 3000
