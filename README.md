@@ -3,11 +3,67 @@
 
 # t2-app-server
 
+
+## Lanza app
+- export PORT=3000
+- docker-compose build
+- docker-compose up
+
 ## Servicios disponibles
 
 ### Servicio de usuario
 
 Este se encarga todo respecto al usuario, registro, etc.
+
+#### Registrar Usuario
+
++ Verbo REST: POST
+
++ Body:
+
+      {
+        type: ['passenger','driver']
+        name: 'name',
+        last_name: 'apellido',
+        email: 'email',
+        facebook_acount:facebook_acount,
+      car:{
+          model: 'model',
+          color: 'color',
+          patent: 'patent',
+          year: '2010',
+          state: ['good','bad','maso'],
+          air_conditioner:'hp',
+          music:['radio','album']
+      }
+    }
+
++ URL: http://uri:port/user/
+
+#### Actualizar información usuario
+
++ Verbo REST: PUT
++ Body:
+              {
+                email: 'julano.casandro@gmail',
+                ...
+                ....
+              }
+
+Los puntos suspensivos serian los datos que se quieren actualizar
+
++ URL: http://uri:port/user/
+
+#### Ver información de Usuario
+
++ Verbo REST: GET
++ Body:
+
+        {}
+
++ URL: http://uri:port/user/{id_user}
+
+
 
 ### Servicio de viaje
 
