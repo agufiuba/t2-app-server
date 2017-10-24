@@ -12,4 +12,5 @@ ADD src /as/src/main
 ADD src /as/src/test
 
 EXPOSE 3000
+
 CMD [ "gunicorn", "src.app:app", "-b 0.0.0.0:3000" ]
