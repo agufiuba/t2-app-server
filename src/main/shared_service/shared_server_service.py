@@ -1,6 +1,6 @@
 import requests
 import json
-
+from . import data_transformator_query_params as transformator
 
 class SharedServerService:
     def __init__(self):
@@ -15,14 +15,18 @@ class SharedServerService:
         data = json.loads(r.text)
         self.token = data["id"]
 
-    def addUser(self, json):
-        return 'addUser'
+    #Pre: recibo un dict con todo los parametros
+    #Post: devuelvo el codigo de respuesta del shared: 200,400
+    def addUser(self, data):
+        stringQuery = transformator.transformate(data)
+        response = requests.post(self.shared_server_addr+'?'+stringQuery)
+        return r.status_code
 
-    def getDataFromUser(self):
+    def getDataFromUser(self,id):
         return 'getDataFromUser'
 
-    def updateUser(self):
+    def updateUser(self,id,data):
         return 'updateUser'
 
-    def deleteUser(self):
+    def deleteUser(self,id):
         return 'deleteUser'
