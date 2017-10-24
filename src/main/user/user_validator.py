@@ -25,13 +25,15 @@ def validate_add_user_request(request):
             if field_driver not in data['car']:
                 logging.info('Falta el campo '+field_driver+' dentro de car, devolviendo un 400',extra=log_info)
                 return 'Falta el campo '+field_driver+' dentro de car'
+    else:
+        logging.info('Se esta registrando un usuario',extra=log_info)
     return 'ok'
 
 
 
 def validate_update_user_request(request):
     logging.info('Validando un request para actualizar informacion de un user',extra=log_info)
-    if (request.form.get('id') == None):
-        logging.info('El campo id no existe')
-        return 'Falta el campo id'
+    data = request.get_json()
+    if 'id' not in data:
+        logging.info('Falta el campo id dentro del request para actualizar usuario, devolviendo 400',extra=log_info)
     return 'ok'
