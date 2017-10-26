@@ -4,10 +4,21 @@
 # t2-app-server
 
 
-## Lanza app
-- export PORT=3000
-- docker-compose build
-- docker-compose up
+
+## Instrucciones para ejecutar la Aplicación
+
+La aplicación requiere que exista una red de docker llamada "ubernet". Para crearla debe ejecutarse:
+
+- `docker network create ubernet`
+
+Luego, para construir la aplicación:
+
+- `export PORT=3000` (o el puerto de localhost al que se la desea ligar)
+- `docker-compose build`
+
+Finalmente, para levantar el servidor:
+
+- `docker-compose up`
 
 ## Servicios disponibles
 
