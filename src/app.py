@@ -1,10 +1,10 @@
 from flask import Flask
-from .main.user.user_controller import user_controller
-from .main.travels.travels_controller import travels_controller
-from .main.position.position_controller import position_controller
-from .main.drivers.drivers_controller import drivers_controller
-from .main.path.path_controller import path_controller
-from .main.login.login_controller import login_controller
+from main.user.user_controller import user_controller
+from main.travels.travels_controller import travels_controller
+from main.position.position_controller import position_controller
+from main.drivers.drivers_controller import drivers_controller
+from main.path.path_controller import path_controller
+from main.login.login_controller import login_controller
 
 app = Flask(__name__)
 
