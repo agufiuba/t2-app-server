@@ -22,6 +22,8 @@ services:
       - "$PORT:3000"
     depends_on:
       - mdb
+    environment:
+    - MONGO_URI=mdb
 
 networks:
   default:

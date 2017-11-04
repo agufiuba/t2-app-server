@@ -6,6 +6,7 @@ from drivers.drivers_controller import drivers_controller_constructor
 from drivers.drivers_service import DriversService
 from path.path_controller import path_controller
 from login.login_controller import login_controller
+import os
 
 def build_app(mongo_uri = "mongodb://mdb", db = "t2"):
 
@@ -21,7 +22,8 @@ def build_app(mongo_uri = "mongodb://mdb", db = "t2"):
 
     return app
 
-app = build_app()
+# La URL de mongodb se le pasa por la variable de entorno MONGO_URI.
+app = build_app("mongodb://" + os.environ['MONGO_URI'])
 
 if __name__ == "__main__":
     app.run()
