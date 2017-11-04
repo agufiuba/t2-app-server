@@ -1,7 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials
 
-cred = credentials.Certificate('/as/src/main/firebase/serviceAccountKey.json')
+cred = credentials.Certificate('/as/src/llevame/firebase/serviceAccountKey.json')
 auth = firebase_admin.initialize_app(cred)
 
 

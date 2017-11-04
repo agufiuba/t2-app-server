@@ -1,4 +1,4 @@
-from ..firebase import firebase_service
+from firebase import firebase_service
 
 def login(request):
     id_token = request.form['Authorization']
