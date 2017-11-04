@@ -8,13 +8,15 @@ from path.path_controller import path_controller
 from login.login_controller import login_controller
 import os
 
-def build_app(mongo_uri = "mongodb://mdb", db = "t2"):
+def build_app(mongo_uri = None, db = "t2"):
+    if (mongo_uri == None):
+        mongo_uri = "mongodb://" + os.environ['MONGO_URI']
 
     app = Flask(__name__)
 
     app.register_blueprint(user_controller);
     app.register_blueprint(path_controller);
-    driver_service = DriversService(mongo_uri);
+    driver_service = DriversService(mongo_uri, db);
     app.register_blueprint(drivers_controller_constructor(driver_service));
     app.register_blueprint(travels_controller);
     app.register_blueprint(position_controller);
@@ -23,7 +25,7 @@ def build_app(mongo_uri = "mongodb://mdb", db = "t2"):
     return app
 
 # La URL de mongodb se le pasa por la variable de entorno MONGO_URI.
-app = build_app("mongodb://" + os.environ['MONGO_URI'])
+app = build_app()
 
 if __name__ == "__main__":
     app.run()
