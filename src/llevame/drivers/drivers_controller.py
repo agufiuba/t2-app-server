@@ -16,7 +16,7 @@ def drivers_controller_constructor(driver_service):
         # TODO chequear que no está dado de alta.
         # TODO chequear que id sea un número? Son numéricos
         # Por ahora lo doy de alta así nomás.
-        return driver_service.login_driver(id)
+        driver_service.login_driver(id)
         return 'PUT driver OK', 200
 
     return drivers_controller
