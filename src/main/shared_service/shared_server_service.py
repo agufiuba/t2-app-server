@@ -1,32 +1,31 @@
 import requests
 import json
 from . import data_transformator_query_params as transformator
+import logging
+FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
+logging.basicConfig(format=FORMAT,level=logging.INFO)
+log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
 
-class SharedServerService:
-    def __init__(self):
-        self.shared_server_addr = "http://localhost:3000" # NOTE esto es solo local.
-        # NOTE se llamaría a getToken acá?
+token = ""
+shared_server_addr = "http://localhost:4000"
+def getToken():
+    logging.info("Obteniendo el token de autenticacion",extra=log_info)
+    code = 0
+    while(code != 200):
+        r = request.get(shared_server_addr+"/login")
+        code = r.status_code
+    data  = json.loads(r.text)
+    token = data["id"]
 
-    def getToken(self):
-        code = 0
-        while(code != 200):
-            r = requests.get(self.shared_server_addr + "/login")
-            code = r.status_code
-        data = json.loads(r.text)
-        self.token = data["id"]
+def addUser(data):
+    stringQuery = transformator.transformate(data)
+    response = requests.post(self.shared_server_addr+'?'+stringQuery)
+    return r.status_code
 
-    #Pre: recibo un dict con todo los parametros
-    #Post: devuelvo el codigo de respuesta del shared: 200,400
-    def addUser(self, data):
-        stringQuery = transformator.transformate(data)
-        response = requests.post(self.shared_server_addr+'?'+stringQuery)
-        return r.status_code
 
-    def getDataFromUser(self,id):
-        return 'getDataFromUser'
+def getDataFromUser(id):
+    return 'getDataFromUser'
 
-    def updateUser(self,id,data):
-        return 'updateUser'
 
-    def deleteUser(self,id):
-        return 'deleteUser'
+def deleteUser(self,id):
+    return 'deleteUser'

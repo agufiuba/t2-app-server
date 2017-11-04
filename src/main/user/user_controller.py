@@ -1,7 +1,7 @@
 from flask import Blueprint,request
 import logging
 from .  import user_validator
-from ..shared_service import shared_server_service
+from ..shared_service import shared_server_service as SharedService
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -9,8 +9,6 @@ log_info = {'clientip': '192.168.0.1', 'service': 'user'}
 
 #creando un controlador
 user_controller = Blueprint('controller',__name__)
-#creando una instancia del servicio del shared service
-sharedService = shared_server_service.SharedServerService()
 
 
 @user_controller.route('/user',methods=['POST'])
