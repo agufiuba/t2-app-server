@@ -10,3 +10,8 @@ log_info = {'clientip': '192.168.0.1', 'service': 'userService'}
 def addUser(user):
     logging.info('Se va a agregar un nuevo usuario, enviando solicitud al servicio del shared service',extra=log_info)
     return sharedService.addUser(user)
+
+
+def getUser(email):
+    logging.info('Se va a obtener información de un nuevo usuario de email'+email,extra=log_info)
+    return sharedService.getDataFromUser(email)

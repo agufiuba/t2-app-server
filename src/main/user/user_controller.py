@@ -2,7 +2,6 @@ from flask import Blueprint,request
 import logging
 from . import user_validator
 from . import user_service as userService
-from ..shared_service import shared_server_service as sharedService
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -32,9 +31,10 @@ def update_user():
     return 'PUT user OK', 200
 
 
-@user_controller.route('/user/<id>',methods=['GET'])
-def see_user(id):
+@user_controller.route('/user/<email>',methods=['GET'])
+def see_user(email):
     logging.info('Se recibio un Request GET', extra=log_info)
+    userService.getUser(email)
     return 'GET user OK', 200
 
 

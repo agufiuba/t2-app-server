@@ -6,7 +6,6 @@ FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
 
-id = ""
 token = ''
 shared_server_addr = "http://shared-server:4000"
 
@@ -30,8 +29,14 @@ def addUser(user):
     return res.status_code == 200 or res.status_code == 201
 
 
-def getDataFromUser(id):
-    return 'getDataFromUser'
+def getDataFromUser(email):
+    logging.info("Obteniendo información de un usuario",extra=log_info)
+    url = shared_server_addr+'/users/'+email
+    logging.info('Realizando GET al shared server con url +['+url+']',extra=log_info)
+    res = requests.get(url)
+    if res != 200 and res!=201 :
+        return None;
+    return res.content
 
 
 def deleteUser(self,id):
