@@ -8,7 +8,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'loginService'}
 
 
 def login(request):
-    id_token = request.form['Authorization']
+    id_token = request.headers['Authorization']
     if firebaseService.validate_token(id_token):
         return 'Login correct',200
     else:
