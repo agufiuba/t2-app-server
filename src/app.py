@@ -7,9 +7,14 @@ from main.path.path_controller import path_controller
 from main.login.login_controller import login_controller
 import logging
 from main.shared_service import shared_server_service as SharedService
+from flask import Blueprint
 
 app = Flask(__name__)
 
+main_controller = Blueprint('main',__name__)
+@main_controller.route('/ht',methods=['GET'])
+def health():
+    return 'App UP',200
 
 #Agregando todos los controladores
 app.register_blueprint(user_controller);
@@ -18,7 +23,7 @@ app.register_blueprint(drivers_controller);
 app.register_blueprint(travels_controller);
 app.register_blueprint(position_controller);
 app.register_blueprint(login_controller);
-
+app.register_blueprint(main_controller);
 
 #Configuración del loggin
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -28,6 +33,10 @@ log_info = {'clientip': '192.168.0.1', 'service': 'user'}
 
 logging.info('Iniciando aplicación',extra=log_info)
 SharedService.getToken()
+
+
+
+
 
 if __name__ == "__app__":
     app.run()
