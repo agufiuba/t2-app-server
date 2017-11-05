@@ -18,4 +18,4 @@ def validate_token(id_token):
     logging.info('decoded_token'+uid,extra=log_info)
     user = auth.get_user(uid)
     logging.info('el user es:'+str(user.email)+"",extra=log_info)
-    return True
+    return str(user.email)

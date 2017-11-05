@@ -1,4 +1,5 @@
 from ..firebase import firebase_service as firebaseService
+from ..shared_service import shared_server_service as sharedService
 
 
 import logging
@@ -11,7 +12,11 @@ def login(request):
     logging.info('LLegó el pedido para loguear a un user',extra=log_info)
     id_token = request.headers['Authorization']
     logging.info('Se obtuvo el siquiente token del app android'+id_token,extra=log_info)
-    if firebaseService.validate_token(id_token):
-        return 'Login correct',200
+    email = firebaseService.validate_token(id_token)
+    user =  sharedService.getDataFromUser(email)
+    if user != None:
+        logging.info('El logueo fue exitoso para el usuario de email ['+email+']',extra=log_info)
+        return True
     else:
-        return 'Login is not correct',400
+        logging.info('El usuario no pudo loguearse porque no se encuentra en la db',extra=log_info)
+        return False
