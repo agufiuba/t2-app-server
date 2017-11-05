@@ -2,9 +2,14 @@ import requests
 import json
 from . import dataTransformatorQueryParams as transformator
 import logging
+
+
+
+
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
+
 
 token = ''
 shared_server_addr = "http://shared-server:4000"
@@ -18,6 +23,7 @@ def getToken():
         code = res.status_code
     token = res.headers['Authorization']
     logging.info('El token es:'+token,extra=log_info)
+    logging.info('El inicio fue OK',extra=log_info)
 
 def addUser(user):
     logging.info('Agregando un usuario',extra=log_info)
@@ -34,9 +40,12 @@ def getDataFromUser(email):
     url = shared_server_addr+'/users/'+email
     logging.info('Realizando GET al shared server con url +['+url+']',extra=log_info)
     res = requests.get(url)
-    if res != 200 and res!=201 :
+    code = res.status_code
+    logging.info('El codigo de response es'+str(code),extra=log_info)
+    if code != 200 and code !=201 :
+        logging.info('Hubo un problema al tratar de obtener información del user',extra=log_info)
         return None;
-    return res.content
+    return json.loads(res.text)
 
 
 def deleteUser(self,id):
