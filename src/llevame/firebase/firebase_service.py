@@ -1,7 +1,9 @@
 import firebase_admin
 from firebase_admin import credentials
+import os
 
-cred = credentials.Certificate('/as/src/main/firebase/serviceAccountKey.json')
+filename = os.path.join(os.path.dirname(__file__), 'serviceAccountKey.json')
+cred = credentials.Certificate(filename)
 auth = firebase_admin.initialize_app(cred)
 
 
