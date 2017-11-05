@@ -18,10 +18,10 @@ def add_user():
     logging.info('Se recibio un Request POST',extra=log_info)
     response = user_validator.validateAddUserRequest(request)
     if response != 'ok':
-        return response,400
+        return jsonify({'message':response}),400
     if userService.addUser(request.get_json()):
-        return 'POST user OK',200
-    return 'POST user is not OK',400
+        return jsonify({'message':'El registro del usuario fue exitoso'}),200
+    return jsonify({'message':'hubo un error al tratar de agregar el usuario'}),400
 
 
 @user_controller.route('/user', methods=['PUT'])

@@ -2,29 +2,33 @@ import logging
 
 FORMAT = "%(asctime)-15s %(clientip)s %(service)-8s %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
-log_info = {'clientip': '192.168.0.1', 'service': 'user'}
+log_info = {'clientip': '192.168.0.1', 'service': 'userValidator'}
 
 
 def validateAddUserRequest(request):
     fields_of_add_user_request = ['type','name','last_name','mail']
     logging.info('Validando request para agregar user',extra=log_info)
     data = request.get_json()
+
     for field in fields_of_add_user_request:
         if field not in data:
             logging.info('Falta el campo '+field+' en el request, devolviendo un 400',extra=log_info)
             return 'Falta el campo '+field+' en el request'
+
     if data['type'] == 'driver':
         logging.info('Se está registrando a un conductor',extra=log_info)
         return validateCarField(data)
     else:
         logging.info('Se esta registrando un usuario',extra=log_info)
         return validateCardField(data)
+
     return 'ok'
+
+
 
 def validateCarField(data):
     fields_from_driver = ['model','color','patent','year','state','air_conditioner','music']
     return validateField('car',fields_from_driver,data)
-
 
 
 def validateCardField(data):
