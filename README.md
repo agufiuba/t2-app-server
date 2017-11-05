@@ -99,9 +99,34 @@ Se encarga de informar los choferes disponibles.
 
 Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta.
 
-### Servicio de choferes
+### Servicio de viajes
 
-Proveera una lista de choferes disponibles.
+#### Agregar un viaje nuevo
+
++ Verbo REST: PUT
++ Body:
+
+      {
+        email:cristian@gmail.com,
+        from: -36.60213444;-37.43928221,
+        to: -37.343431912;49.4394329
+      }
+
++ URL: http://uri:port/travels
+
++ Response :
+
+En caso de que el usuario no exista se devuelve un 400
+
+      {
+        message: El usuario no existe.
+      }
+
+En caso de que el usuario exista
+
+      {
+        message: Nuevo viaje agregado exitosamente
+      }
 
 
 ### Servicio de Direccionamiento
