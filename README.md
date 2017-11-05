@@ -135,6 +135,24 @@ Se utilizara para permitir conocer los caminos disponibles.
 
 
 
+### Servicio de parametros
+
+Se utiliza para obtener los parametros posibles
+
+URL's:
+  +  http://localhost:3000/parameters/car/state
+  +  http://localhost:3000/parameters/car/music
+  +  http://localhost:3000/parameters/car/model
+  +  http://localhost:3000/parameters/car/colour
+  + http://localhost:3000/parameters/car/air_conditioner
+
+
+Response:
+
+        {
+          parameters : [......]
+        }
+
 ## Uri's dispobibles
 
 

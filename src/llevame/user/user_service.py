@@ -14,7 +14,7 @@ def addUser(user):
 
 def getUser(email):
     logging.info('Se va a obtener información de un nuevo usuario de email'+email,extra=log_info)
-    response  = sharedService.getDataFromUser(email)
+    response  = sharedService.getUserFromEmail(email)
     if (response != None):
         dic = {}
         dic['name'] = response['nombre']
