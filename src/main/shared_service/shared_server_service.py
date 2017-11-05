@@ -41,10 +41,10 @@ def getDataFromUser(email):
     logging.info('Realizando GET al shared server con url +['+url+']',extra=log_info)
     res = requests.get(url)
     code = res.status_code
-    logging.info('El codigo de response es'+str(code),extra=log_info)
     if code != 200 and code !=201 :
         logging.info('Hubo un problema al tratar de obtener información del user',extra=log_info)
         return None;
+    logging.info('Se obtuvo la información de manera correcta',extra=log_info)
     return json.loads(res.text)
 
 

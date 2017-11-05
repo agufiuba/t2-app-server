@@ -15,6 +15,11 @@ def addUser(user):
 def getUser(email):
     logging.info('Se va a obtener información de un nuevo usuario de email'+email,extra=log_info)
     response  = sharedService.getDataFromUser(email)
-    for field in response:
-        logging.info('Los campos de la respuesta del shared son:'+str(field),extra=log_info)
-    return None
+    if (response != None):
+        dic = {}
+        dic['name'] = response['nombre']
+        dic['last_name'] = response['apellido']
+        dic['mail'] = response['correo']
+        return dic
+    else:
+        return None
