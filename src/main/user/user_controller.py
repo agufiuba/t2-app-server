@@ -1,24 +1,26 @@
 from flask import Blueprint,request
 import logging
-from .  import user_validator
-from ..shared_service import shared_server_service as SharedService
+from . import user_validator
+from . import user_service as userService
+from ..shared_service import shared_server_service as sharedService
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'user'}
 
 #creando un controlador
-user_controller = Blueprint('controller',__name__)
+user_controller = Blueprint('user_controller',__name__)
 
 
 @user_controller.route('/user',methods=['POST'])
 def add_user():
     logging.info('Se recibio un Request POST',extra=log_info)
-    response = user_validator.validate_add_user_request(request)
+    response = user_validator.validateAddUserRequest(request)
     if response != 'ok':
         return response,400
-    respondeStatus = sharedService.addUser(request.get_json())
-    return 'POST user OK',200
+    if userService.addUser(request.get_json()):
+        return 'POST user OK',200
+    return 'POST user is not OK',400
 
 
 @user_controller.route('/user', methods=['PUT'])
