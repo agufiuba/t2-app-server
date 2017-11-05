@@ -1,14 +1,12 @@
 import logging
 
 FORMAT = "%(asctime)-15s %(clientip)s %(service)-8s %(message)s"
-
 logging.basicConfig(format=FORMAT,level=logging.INFO)
-
 log_info = {'clientip': '192.168.0.1', 'service': 'user'}
 
 
-def validate_add_user_request(request):
-    fields_of_add_user_request = ['type','name','last_name','id']
+def validateAddUserRequest(request):
+    fields_of_add_user_request = ['type','name','last_name','mail']
     logging.info('Validando request para agregar user',extra=log_info)
     fields_from_driver = ['model','color','patent','year','state','air_conditioner','music']
     data = request.get_json()
@@ -29,6 +27,8 @@ def validate_add_user_request(request):
         logging.info('Se esta registrando un usuario',extra=log_info)
     return 'ok'
 
+def validateCarField(request):
+    logging.info('Se está registrando a un conductor',extra=log_info)
 
 
 def validate_update_user_request(request):

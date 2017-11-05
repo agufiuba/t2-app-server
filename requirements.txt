@@ -7,3 +7,4 @@ coveralls
 pyyaml
 firebase-admin
 pymongo
+doxypypy
