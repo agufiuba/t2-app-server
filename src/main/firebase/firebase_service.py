@@ -13,11 +13,9 @@ default_app = firebase_admin.initialize_app(cred)
 
 
 def validate_token(id_token):
-
-
     decoded_token = auth.verify_id_token(id_token)
     uid = decoded_token['uid']
     logging.info('decoded_token'+uid,extra=log_info)
     user = auth.get_user(uid)
-    logging.info('el user es:'+user,extra=log_info)
+    logging.info('el user es:'+str(user.email)+"",extra=log_info)
     return True
