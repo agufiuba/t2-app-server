@@ -32,7 +32,7 @@ def validateCarField(data):
 
 
 def validateCardField(data):
-    fieldFromCard = ['nameOnCard','number','type']
+    fieldFromCard = ['nameOnCard','number','typeCard']
     return validateField('card',fieldFromCard,data)
 
 

@@ -12,12 +12,13 @@ def transformate(data):
     for field in data:
         if field == 'type':
             data['type'] = transformateTypeUser(data['type'])
-            logging.info('El parametro es:'+field,extra=log_info)
-            if (type (data[field]) is dict):
-                for sub_field in data[field]:
-                    queryParam = queryParam + sub_field +"="+data[field][sub_field]+"&"
-            else:
-                queryParam = queryParam + field+"="+data[field]+"&"
+        logging.info('El parametro visible es'+field,extra=log_info)
+        if type(data[field]) is dict:
+            for sub_field in data[field]:
+                queryParam = queryParam + sub_field+"="+data[field][sub_field]+"&"
+        else:
+            queryParam = queryParam + field+"="+data[field]+"&"
+
     logging.info('Se transformo a la siguiente query params'+queryParam,extra=log_info)
     return queryParam
 
