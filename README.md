@@ -38,21 +38,34 @@ Este se encarga todo respecto al usuario, registro, etc.
 + Body:
 
       {
-        type: ['passenger','driver']
-        name: 'name',
-        last_name: 'apellido',
-        email: 'email',
-        facebook_acount:facebook_acount,
+        type: 'driver'
+        name: 'xxxxx',
+        last_name: 'xxxxx',
+        email: 'xxxx',
       car:{
-          model: 'model',
-          color: 'color',
-          patent: 'patent',
-          year: '2010',
+          model: 'xxxx',
+          color: 'xxxx',
+          patent: 'xxxxx',
+          year: 'xxxxx',
           state: ['good','bad','maso'],
           air_conditioner:'hp',
           music:['radio','album']
       }
     }
+
+    {
+      type: 'passenger'
+      name: 'name',
+      last_name: 'apellido',
+      email: 'email',
+    car:{
+        'nameOnCard':'xxxx',
+        'number':'xxx',
+        'typeCard':'xxxxx',
+        'securityCode':'xxxxxx',
+    }
+  }
+
 
 + URL: http://uri:port/user/
 
@@ -99,16 +112,89 @@ Se encarga de informar los choferes disponibles.
 
 Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta.
 
-### Servicio de choferes
+### Servicio de viajes disponibles
 
-Proveera una lista de choferes disponibles.
+#### Agregar un viaje nuevo
+
++ Verbo REST: PUT
++ Body:
+
+      {
+        'email':'cristian@gmail.com',
+        'from': '-36.60213444;-37.43928221',
+        'to': '-37.343431912;49.4394329',
+        'km': '20'
+      }
+
++ URL: http://uri:port/availableTrip
+
++ Response :
+
+En caso de que el usuario no exista se devuelve un 400
+
+      {
+        message: El usuario no existe.
+      }
+
+En caso de que el usuario exista
+
+      {
+        message: Nuevo viaje agregado exitosamente
+      }
 
 
+
++ Verbo REST: GET
++ Body:
+
+          {}
+
++ Response:
+          {
+            'availableTrips':[
+            {
+              "email": "dasdasdads",
+              "from": "casa",
+              "km": "20",
+              "to": "otra casa"
+            },
+            {
+              "email": "dasdasdads",
+              "from": "Avenida Santa fe",
+              "km": "20",
+              "to": "Avenida San Juan"
+            },
+            {
+              "email": "dasdasdads",
+              "from": "Avenida Santa Matia",
+              "km": "20",
+              "to": "Avenida San Cristbal"
+            }
+            ]
+          }
 ### Servicio de Direccionamiento
 
 Se utilizara para permitir conocer los caminos disponibles.
 
 
+
+### Servicio de parametros
+
+Se utiliza para obtener los parametros posibles
+
+URL's:
+  +  http://localhost:3000/parameters/car/state
+  +  http://localhost:3000/parameters/car/music
+  +  http://localhost:3000/parameters/car/model
+  +  http://localhost:3000/parameters/car/colour
+  + http://localhost:3000/parameters/car/air_conditioner
+
+
+Response:
+
+        {
+          parameters : [......]
+        }
 
 ## Uri's dispobibles
 

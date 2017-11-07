@@ -35,7 +35,7 @@ def addUser(user):
     return res.status_code == 200 or res.status_code == 201
 
 
-def getDataFromUser(email):
+def getUserFromEmail(email):
     logging.info('Obteniendo información del usuario ['+email+']',extra=log_info)
     url = shared_server_addr+'/users/'+email
     logging.info('Realizando GET al shared server con url +['+url+']',extra=log_info)

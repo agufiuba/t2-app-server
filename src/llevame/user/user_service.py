@@ -14,12 +14,21 @@ def addUser(user):
 
 def getUser(email):
     logging.info('Se va a obtener información de un nuevo usuario de email'+email,extra=log_info)
-    response  = sharedService.getDataFromUser(email)
+    response  = sharedService.getUserFromEmail(email)
     if (response != None):
-        dic = {}
-        dic['name'] = response['nombre']
-        dic['last_name'] = response['apellido']
-        dic['mail'] = response['correo']
-        return dic
+        filted_response = {}
+        for field in response:
+            if field != 'id':
+                if field == 'type':
+                    filted_response[field] = convertType(response[field])
+                else:
+                    filted_response[field] = response[field]
+        return filted_response
     else:
         return None
+
+
+def convertType(idType):
+    if idType == 1:
+        return 'passenger'
+    return 'driver'
