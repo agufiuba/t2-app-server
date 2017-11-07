@@ -112,7 +112,7 @@ Se encarga de informar los choferes disponibles.
 
 Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta.
 
-### Servicio de viajes
+### Servicio de viajes disponibles
 
 #### Agregar un viaje nuevo
 
@@ -120,12 +120,13 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
 + Body:
 
       {
-        email:cristian@gmail.com,
-        from: -36.60213444;-37.43928221,
-        to: -37.343431912;49.4394329
+        'email':'cristian@gmail.com',
+        'from': '-36.60213444;-37.43928221',
+        'to': '-37.343431912;49.4394329',
+        'km': '20'
       }
 
-+ URL: http://uri:port/travels
++ URL: http://uri:port/availableTrip
 
 + Response :
 
@@ -142,6 +143,35 @@ En caso de que el usuario exista
       }
 
 
+
++ Verbo REST: GET
++ Body:
+
+          {}
+
++ Response:
+          {
+            'availableTrips':[
+            {
+              "email": "dasdasdads",
+              "from": "casa",
+              "km": "20",
+              "to": "otra casa"
+            },
+            {
+              "email": "dasdasdads",
+              "from": "Avenida Santa fe",
+              "km": "20",
+              "to": "Avenida San Juan"
+            },
+            {
+              "email": "dasdasdads",
+              "from": "Avenida Santa Matia",
+              "km": "20",
+              "to": "Avenida San Cristbal"
+            }
+            ]
+          }
 ### Servicio de Direccionamiento
 
 Se utilizara para permitir conocer los caminos disponibles.
