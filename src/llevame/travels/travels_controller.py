@@ -1,4 +1,4 @@
-from flask import Blueprint,request
+from flask import Blueprint,request,jsonify
 from . import travelService
 from . import travelRequestValidator
 import logging
@@ -14,12 +14,16 @@ travels_controller = Blueprint('travels_controller',__name__)
 
 
 
-
-@travels_controller.route('/travels/<email>',methods=['PUT'])
+@travels_controller.route('/travels/<email>',methods=['POST'])
 def addTravelAvailable(email):
     logging.info('Llegó un reques PUT en el /travels',extra=log_info)
     validate = travelRequestValidator.validate(request)
     if validate != 'ok':
         return validate,400
-    travelService.addTravel(id,request)
-    return 'Welcome to travels service'
+    if travelService.addTravel(email,request.get_json()):
+        return jsonify({'message':'Se guardo exitosamente el viaje del user'+email}),200
+    return jsonify({'message':'No existe pasajero registrado con email '+email}),400
+
+@travels_controller.route('/travels/available',methods=['GET'])
+def getAvailableTravels():
+    return jsonify(travelService.getAvailableTravels()),200

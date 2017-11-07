@@ -8,6 +8,7 @@ from path.path_controller import path_controller
 from parameters.parametersController import parameters_controller
 from login.login_controller import login_controller
 from shared_service import shared_server_service as SharedService
+from travels import travelService
 
 import os
 import logging
@@ -38,6 +39,7 @@ def build_app(mongo_uri = None, db = "t2"):
     app.register_blueprint(user_controller)
     app.register_blueprint(path_controller)
     driver_service = DriversService(mongo_uri, db)
+    travelService.init(mongo_uri,db)
     app.register_blueprint(drivers_controller_constructor(driver_service))
     app.register_blueprint(travels_controller)
     app.register_blueprint(position_controller)

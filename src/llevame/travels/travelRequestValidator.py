@@ -8,11 +8,8 @@ log_info = {'clientip': '192.168.0.1', 'service': 'travelsRequestValidator'}
 
 def validate(request):
     json = request.get_json()
-    if 'from' not in json:
-        logging.info('El campo from no existe',extra=log_info)
-        return 'El campo from no se encuentra disponible en el request'
-    if 'to' not in json:
-        loggin.info('El campo to no existe',extra=log_info)
-        return 'El campo to no se encuentra disponible en el request'
-    loggin.info('El request tiene todos los campos que corresponde',extra=log_info)
+    if 'km' not in json:
+        logging.info('El campo km no existe',extra=log_info)
+        return 'El campo km no se encuentra disponible en el request'
+    logging.info('El request tiene todos los campos que corresponde',extra=log_info)
     return 'ok'
