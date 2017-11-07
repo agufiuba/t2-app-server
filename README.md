@@ -38,21 +38,34 @@ Este se encarga todo respecto al usuario, registro, etc.
 + Body:
 
       {
-        type: ['passenger','driver']
-        name: 'name',
-        last_name: 'apellido',
-        email: 'email',
-        facebook_acount:facebook_acount,
+        type: 'driver'
+        name: 'xxxxx',
+        last_name: 'xxxxx',
+        email: 'xxxx',
       car:{
-          model: 'model',
-          color: 'color',
-          patent: 'patent',
-          year: '2010',
+          model: 'xxxx',
+          color: 'xxxx',
+          patent: 'xxxxx',
+          year: 'xxxxx',
           state: ['good','bad','maso'],
           air_conditioner:'hp',
           music:['radio','album']
       }
     }
+
+    {
+      type: 'passenger'
+      name: 'name',
+      last_name: 'apellido',
+      email: 'email',
+    car:{
+        'nameOnCard':'xxxx',
+        'number':'xxx',
+        'typeCard':'xxxxx',
+        'securityCode':'xxxxxx',
+    }
+  }
+
 
 + URL: http://uri:port/user/
 

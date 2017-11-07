@@ -9,12 +9,10 @@ def validateAddUserRequest(request):
     fields_of_add_user_request = ['type','name','last_name','mail']
     logging.info('Validando request para agregar user',extra=log_info)
     data = request.get_json()
-
     for field in fields_of_add_user_request:
         if field not in data:
             logging.info('Falta el campo '+field+' en el request, devolviendo un 400',extra=log_info)
             return 'Falta el campo '+field+' en el request'
-
     if data['type'] == 'driver':
         logging.info('Se está registrando a un conductor',extra=log_info)
         return validateCarField(data)
@@ -32,7 +30,7 @@ def validateCarField(data):
 
 
 def validateCardField(data):
-    fieldFromCard = ['nameOnCard','number','typeCard']
+    fieldFromCard = ['nameOnCard','number','typeCard','securityCode']
     return validateField('card',fieldFromCard,data)
 
 
