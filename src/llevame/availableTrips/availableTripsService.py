@@ -23,15 +23,18 @@ def addTravel(email,data):
     user = sharedService.getUserFromEmail(email)
     #Si el user existe
     if user != None:
+        logging.info('El usuario sí se encuentra registrado',extra=log_info)
         this.db.trips.insert_one({'email':email,'from':data['from'],'to':data['to'],'km':data['km']})
+        logging.info('Se agrego correctamente el viaje',extra=log_info)
         return True
+    logging.info('El usuario no se encuentra registrado, no se agrega viaje',extra=log_info)
     return False
 
 def getAvailableTravels():
+    logging.info('Se esta obteniendo todos los viajes disponibles',extra=log_info)
     cursor = this.db.trips.find({})
     response = []
     for document in cursor:
         travel = {}
-        logging.info(document['from'],extra=log_info)
         response.append({'email':document['email'],'from':document['from'],'to':document['to'],'km':document['km']})
     return response
