@@ -14,7 +14,7 @@ travels_controller = Blueprint('travels_controller',__name__)
 
 
 
-@travels_controller.route('/travels/<email>',methods=['POST'])
+@travels_controller.route('/availableTrip/<email>',methods=['POST'])
 def addTravelAvailable(email):
     logging.info('Llegó un reques PUT en el /travels',extra=log_info)
     validate = travelRequestValidator.validate(request)
@@ -24,6 +24,6 @@ def addTravelAvailable(email):
         return jsonify({'message':'Se guardo exitosamente el viaje del user'+email}),200
     return jsonify({'message':'No existe pasajero registrado con email '+email}),400
 
-@travels_controller.route('/travels/available',methods=['GET'])
+@travels_controller.route('/availableTrip',methods=['GET'])
 def getAvailableTravels():
-    return jsonify(travelService.getAvailableTravels()),200
+    return jsonify({'availableTrips':travelService.getAvailableTravels()}),200
