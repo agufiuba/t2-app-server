@@ -59,10 +59,11 @@ Este se encarga todo respecto al usuario, registro, etc.
       last_name: 'apellido',
       email: 'email',
     car:{
-        'nameOnCard':'xxxx',
         'number':'xxx',
         'typeCard':'xxxxx',
         'securityCode':'xxxxxx',
+        'expirationYear':'xxxxx',
+        'expirationMonth':'xxxxxx'
     }
   }
 
