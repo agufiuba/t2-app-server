@@ -68,4 +68,4 @@ def getPayMethods():
     url = shared_server_addr+'/paymethod'
     logging.info('Se esta enviando un GET a la siguiente url'+url,extra=log_info)
     res = requests.get(url)
-    return json.loads(res.text)['items']
+    return json.loads(res.text)

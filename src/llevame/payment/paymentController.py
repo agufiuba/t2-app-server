@@ -16,9 +16,10 @@ payment_controller = Blueprint('paymentController',__name__)
 
 @payment_controller.route('/payment/methods',methods=['GET'])
 def getPaymentMethods():
-    token = request.headers['Authorization']
-    email = firebaseService.validate_token(token)
-    user = sharedService.getUserFromEmail(email)
+    #token = request.headers['Authorization']
+    #email = firebaseService.validate_token(token)
+    #user = sharedService.getUserFromEmail(email)
+    user = 'asass'
     if user != None:
         payMethodsList = paymentService.getPaymentMethods()
         if payments != None:
