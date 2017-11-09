@@ -50,3 +50,11 @@ def getUserFromEmail(email):
 
 def deleteUser(self,id):
     return 'deleteUser'
+
+
+
+def getCostFromDistanceInKM(userEmail,distanceInKM):
+    logging.info('Calculando la el costo de viaje para '+userEmail+' y distancia '+str(distanceInKM),extra=log_info)
+    url = shared_server_addr+'/cost/'+userEmail+'/'+str(distanceInKM)
+    logging.info('Realizo request al shared server con el siguiente request',extra=log_info)
+    res = requests.get(url)

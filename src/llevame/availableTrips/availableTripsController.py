@@ -2,7 +2,7 @@ from flask import Blueprint,request,jsonify
 from . import availableTripsService
 from . import availableTripsRequestValidator
 import logging
-
+from firebase import firebase_service as firebaseService
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -14,15 +14,20 @@ availableTripsController = Blueprint('availableTripsController',__name__)
 
 
 
-@availableTripsController.route('/availableTrip/<email>',methods=['POST'])
-def addTravelAvailable(email):
+@availableTripsController.route('/availableTrip',methods=['POST'])
+def addTravelAvailable():
     logging.info('Llegó un reques PUT en el /travels',extra=log_info)
     validate = availableTripsRequestValidator.validate(request)
+    token = request.headers['Authorization']
+    email = firebaseService.validate_token(token)
     if validate != 'ok':
         return validate,400
-    if availableTripsService.addTravel(email,request.get_json()):
-        return jsonify({'message':'Se guardo exitosamente el viaje del user'+email}),200
+    response = availableTripsService.addTravel(email,request.get_json())
+    if response != None:
+        return jsonify(response),200
     return jsonify({'message':'No existe pasajero registrado con email '+email}),400
+
+
 
 @availableTripsController.route('/availableTrip',methods=['GET'])
 def getAvailableTravels():
