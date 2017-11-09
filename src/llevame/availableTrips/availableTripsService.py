@@ -1,9 +1,9 @@
 from shared_service import shared_server_service as sharedService
+from tripCost import tripCostService
 from pymongo import MongoClient
 from bson.json_util import dumps
 import logging
 import sys
-
 this = sys.modules[__name__]
 this.db = None
 
@@ -23,10 +23,11 @@ def addTravel(email,data):
     user = sharedService.getUserFromEmail(email)
     #Si el user existe
     if user != None:
-        logging.info('El usuario sí se encuentra registrado',extra=log_info)
-        this.db.trips.insert_one({'email':email,'from':data['from'],'to':data['to'],'km':data['km']})
+        logging.info('El usuario '+email+' sí se encuentra registrado',extra=log_info)
+        response = tripCostService.getCostAndDistance(email,data['from'],data['to'])
+        this.db.trips.insert_one({'email':email,'from':data['from'],'to':data['to'],'km':response['distance']})
         logging.info('Se agrego correctamente el viaje',extra=log_info)
-        return True
+        return response
     logging.info('El usuario no se encuentra registrado, no se agrega viaje',extra=log_info)
     return False
 
