@@ -29,7 +29,7 @@ def addTravel(email,data):
         logging.info('Se agrego correctamente el viaje',extra=log_info)
         return response
     logging.info('El usuario no se encuentra registrado, no se agrega viaje',extra=log_info)
-    return False
+    return None
 
 def getAvailableTravels():
     logging.info('Se esta obteniendo todos los viajes disponibles',extra=log_info)

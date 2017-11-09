@@ -25,7 +25,7 @@ def addTravelAvailable():
     response = availableTripsService.addTravel(email,request.get_json())
     if response != None:
         return jsonify(response),200
-    return jsonify({'message':'No existe pasajero registrado con email '+email}),400
+    return jsonify({'message':'Hubo un error al tratar de agregar un nuevo viaje disponible '+email}),400
 
 
 

@@ -51,20 +51,21 @@ Este se encarga todo respecto al usuario, registro, etc.
           air_conditioner:'hp',
           music:['radio','album']
       }
-    }
+      }
 
-    {
-      type: 'passenger'
-      name: 'name',
-      last_name: 'apellido',
-      email: 'email',
-    car:{
-        'nameOnCard':'xxxx',
-        'number':'xxx',
-        'typeCard':'xxxxx',
-        'securityCode':'xxxxxx',
-    }
-  }
+      {
+           type: 'passenger'
+           name: 'name',
+           last_name: 'apellido',
+           email: 'email',
+           car:{
+            'number':'xxx',
+            'typeCard':'xxxxx',
+            'securityCode':'xxxxxx',
+            'expirationYear':'xxxxx',
+            'expirationMonth':'xxxxxx'
+            }
+      }
 
 
 + URL: http://uri:port/user/
@@ -120,11 +121,15 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
 + Body:
 
       {
-        'email':'cristian@gmail.com',
-        'from': '-36.60213444;-37.43928221',
-        'to': '-37.343431912;49.4394329',
-        'km': '20'
+      'Authorization':'xxxxxxx',
+      'Content-Type':'application/json'
       }
+      {
+        'from': '-34.617952,-58.385983',
+        'to': '-34.617952,-58.385983',
+      }
+
+
 
 + URL: http://uri:port/availableTrip
 
@@ -139,7 +144,10 @@ En caso de que el usuario no exista se devuelve un 400
 En caso de que el usuario exista
 
       {
-        message: Nuevo viaje agregado exitosamente
+        'cost':'xxx',
+        'distance':'xxx km'
+        'points':'xxxxxxxxxxxxxxxxxxxx',
+        'time':'x hours x mins'
       }
 
 

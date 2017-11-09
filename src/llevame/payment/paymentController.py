@@ -11,10 +11,10 @@ logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'paymentController'}
 
 
-paymentController = Blueprint('paymentController',__name__)
+payment_controller = Blueprint('paymentController',__name__)
 
 
-@paymentController.route('/paymethod',methods=['GET'])
+@payment_controller.route('/payment/methods',methods=['GET'])
 def getPaymentMethods():
     token = request.headers['Authorization']
     email = firebaseService.validate_token(token)

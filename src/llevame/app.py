@@ -8,7 +8,7 @@ from path.path_controller import path_controller
 from parameters.parametersController import parameters_controller
 from login.login_controller import login_controller
 from shared_service import shared_server_service as SharedService
-from payment import paymentController
+from payment.paymentController import payment_controller
 from availableTrips import availableTripsService
 
 import os
@@ -47,7 +47,7 @@ def build_app(mongo_uri = None, db = "t2"):
     app.register_blueprint(login_controller)
     app.register_blueprint(main_controller)
     app.register_blueprint(parameters_controller)
-    app.register_blueprint(paymentController)
+    app.register_blueprint(payment_controller)
     return app
 
 # La URL de mongodb se le pasa por la variable de entorno MONGO_URI.
