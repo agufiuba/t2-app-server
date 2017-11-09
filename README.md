@@ -125,8 +125,8 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
       'Content-Type':'application/json'
       }
       {
-        'from': '-36.60213444,-37.43928221',
-        'to': '-37.343431912,49.4394329',
+        'from': '-34.617952,-58.385983',
+        'to': '-34.617952,-58.385983',
       }
       
       
