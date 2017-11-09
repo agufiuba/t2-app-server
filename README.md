@@ -51,21 +51,21 @@ Este se encarga todo respecto al usuario, registro, etc.
           air_conditioner:'hp',
           music:['radio','album']
       }
-    }
+      }
 
-    {
-      type: 'passenger'
-      name: 'name',
-      last_name: 'apellido',
-      email: 'email',
-    car:{
-        'number':'xxx',
-        'typeCard':'xxxxx',
-        'securityCode':'xxxxxx',
-        'expirationYear':'xxxxx',
-        'expirationMonth':'xxxxxx'
-    }
-  }
+      {
+           type: 'passenger'
+           name: 'name',
+           last_name: 'apellido',
+           email: 'email',
+           car:{
+            'number':'xxx',
+            'typeCard':'xxxxx',
+            'securityCode':'xxxxxx',
+            'expirationYear':'xxxxx',
+            'expirationMonth':'xxxxxx'
+            }
+      }
 
 
 + URL: http://uri:port/user/
@@ -121,7 +121,8 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
 + Body:
       
       {
-      'Authorization':'xxxxxxx'
+      'Authorization':'xxxxxxx',
+      'Content-Type':'application/json'
       }
       {
         'from': '-36.60213444,-37.43928221',
