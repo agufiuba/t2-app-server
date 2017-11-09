@@ -1,3 +1,4 @@
+
 from flask import Blueprint,request,jsonify
 import logging
 from firebase import firebase_service as firebaseService
@@ -22,8 +23,8 @@ def getPaymentMethods():
     user = 'asass'
     if user != None:
         payMethodsList = paymentService.getPaymentMethods()
-        if payments != None:
-            return jsonify({'parameters':payMethodsList}),200
+        if payMethodsList != None:
+            return jsonify({'methods':payMethodsList}),200
         return jsonify({'message':'No se pudo obtener los medios de pagos'}),400
     else:
         return jsonify({'message':'El usuario no se encuentra registrado'}),400

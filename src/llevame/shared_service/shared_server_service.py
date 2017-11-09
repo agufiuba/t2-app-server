@@ -65,7 +65,7 @@ def getCostFromDistanceInKM(userEmail,distanceInKM):
 
 def getPayMethods():
     logging.info('Llegó una solicitud para poder obtener los medios de pagos',extra=log_info)
-    url = shared_server_addr+'/paymethod'
+    url = shared_server_addr+'/paymethods'
     logging.info('Se esta enviando un GET a la siguiente url'+url,extra=log_info)
     res = requests.get(url)
     return json.loads(res.text)
