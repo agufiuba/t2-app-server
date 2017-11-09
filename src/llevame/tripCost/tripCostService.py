@@ -19,7 +19,10 @@ def getCostAndDistance(userEmail,fromString,toString):
 def getDistanceInKm(fromString,toString):
     res = requests.get(url+'origin='+fromString+'&destination='+toString+'&key='+apiKey+"&alternatives=true")
     resJSON = json.loads(res.text)
-    distanceInMeters = resJSON['routes'][0]['legs'][0]['distance']['text']
-    timeInMinutes = resJSON['routes'][0]['legs'][0]['duration']['text']
-    points = resJSON['routes'][0]['overview_polyline']['points']
+    try:
+        distanceInMeters = resJSON['routes'][0]['legs'][0]['distance']['text']
+        timeInMinutes = resJSON['routes'][0]['legs'][0]['duration']['text']
+        points = resJSON['routes'][0]['overview_polyline']['points']
+    except:
+        return None
     return {'distance':distanceInMeters,'time':timeInMinutes,'points':points}
