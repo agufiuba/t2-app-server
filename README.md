@@ -119,13 +119,16 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
 
 + Verbo REST: PUT
 + Body:
-
+      
       {
-        'email':'cristian@gmail.com',
-        'from': '-36.60213444;-37.43928221',
-        'to': '-37.343431912;49.4394329',
-        'km': '20'
+      'Authorization':'xxxxxxx'
       }
+      {
+        'from': '-36.60213444,-37.43928221',
+        'to': '-37.343431912,49.4394329',
+      }
+      
+      
 
 + URL: http://uri:port/availableTrip
 
@@ -140,7 +143,10 @@ En caso de que el usuario no exista se devuelve un 400
 En caso de que el usuario exista
 
       {
-        message: Nuevo viaje agregado exitosamente
+        'cost':'xxx',
+        'distance':'xxx km'
+        'points':'xxxxxxxxxxxxxxxxxxxx',
+        'time':'x hours x mins'
       }
 
 
