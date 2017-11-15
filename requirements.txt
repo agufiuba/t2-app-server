@@ -5,3 +5,6 @@ pytest-cov
 coverage
 coveralls
 pyyaml
+firebase-admin
+pymongo
+doxypypy

@@ -1,8 +1,13 @@
 language: python
+services:
+  - mongodb
 python:
   - 3.5
 install:
   - pip install -r requirements.txt
+before_script:
+  - export MONGO_URI=127.0.0.1
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)/src/llevame
 script:
   - pytest --cov .
 after_success:
