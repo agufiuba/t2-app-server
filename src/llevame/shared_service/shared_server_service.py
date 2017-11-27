@@ -19,9 +19,12 @@ def getToken():
     code = 0
     while(code != 200):
         logging.info('Realizando request a ['+shared_server_addr+'/login'+']',extra=log_info)
-        res = requests.get(shared_server_addr+"/login")
-        code = res.status_code
-    token = res.headers['Authorization']
+        try:
+            res = requests.get(shared_server_addr+"/login")
+            code = res.status_code
+            token = res.headers['Authorization']
+        except ConnectionError:
+            logging.info('Se rechazó conexion',extra=log_info)
     logging.info('El token es:'+token,extra=log_info)
     logging.info('El inicio fue OK',extra=log_info)
 
