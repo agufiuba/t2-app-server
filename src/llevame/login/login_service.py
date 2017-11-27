@@ -19,6 +19,12 @@ def login(request):
     user =  sharedService.getUserFromEmail(email)
     if user != None:
         logging.info('El logueo fue exitoso para el usuario de email ['+email+']',extra=log_info)
-        return user['type']
+        return convertType(int(user['type']))
     logging.info('El usuario no pudo loguearse porque no se encuentra en la db',extra=log_info)
     return None
+
+
+def convertType(idType):
+    if idType == 1:
+        return 'passenger'
+    return 'driver'
