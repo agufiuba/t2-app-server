@@ -19,9 +19,12 @@ def getToken():
     code = 0
     while(code != 200):
         logging.info('Realizando request a ['+shared_server_addr+'/login'+']',extra=log_info)
-        res = requests.get(shared_server_addr+"/login")
-        code = res.status_code
-    token = res.headers['Authorization']
+        try:
+            res = requests.get(shared_server_addr+"/login")
+            code = res.status_code
+            token = res.headers['Authorization']
+        except ConnectionError:
+            logging.info('Se rechazó conexion',extra=log_info)
     logging.info('El token es:'+token,extra=log_info)
     logging.info('El inicio fue OK',extra=log_info)
 
@@ -58,3 +61,14 @@ def getCostFromDistanceInKM(userEmail,distanceInKM):
     url = shared_server_addr+'/cost/'+userEmail+'/'+str(distanceInKM)
     logging.info('Realizo request al shared server con el siguiente request',extra=log_info)
     res = requests.get(url)
+
+
+
+
+
+def getPayMethods():
+    logging.info('Llegó una solicitud para poder obtener los medios de pagos',extra=log_info)
+    url = shared_server_addr+'/paymethods'
+    logging.info('Se esta enviando un GET a la siguiente url'+url,extra=log_info)
+    res = requests.get(url)
+    return json.loads(res.text)
