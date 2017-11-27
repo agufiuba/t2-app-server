@@ -25,9 +25,12 @@ def addTravel(email,data):
     if user != None:
         logging.info('El usuario '+email+' sí se encuentra registrado',extra=log_info)
         response = tripCostService.getCostAndDistance(email,data['from'],data['to'])
-        this.db.trips.insert_one({'email':email,'from':data['from'],'to':data['to'],'km':response['distance']})
-        logging.info('Se agrego correctamente el viaje',extra=log_info)
-        return response
+        if response != None:
+            this.db.trips.insert_one({'email':email,'from':data['from'],'to':data['to'],'km':response['distance']})
+            logging.info('Se agrego correctamente el viaje',extra=log_info)
+            return response
+        else:
+            return None
     logging.info('El usuario no se encuentra registrado, no se agrega viaje',extra=log_info)
     return None
 

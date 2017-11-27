@@ -16,7 +16,7 @@ def login(request):
     id_token = request.headers['Authorization']
     logging.info('Se obtuvo el siquiente token del app android'+id_token,extra=log_info)
     email = firebaseService.validate_token(id_token)
-    user =  sharedService.getDataFromUser(email)
+    user =  sharedService.getUserFromEmail(email)
     if user != None:
         logging.info('El logueo fue exitoso para el usuario de email ['+email+']',extra=log_info)
         return user['type']
