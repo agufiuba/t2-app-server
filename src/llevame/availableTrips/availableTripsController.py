@@ -24,6 +24,7 @@ def addTravelAvailable():
         return validate,400
     response = availableTripsService.addTravel(email,request.get_json())
     if response != None:
+        logging.info('Se agregó de manera exitosa el viaje dispobible del usuario:'+email,extra=log_info)
         return jsonify(response),200
     return jsonify({'message':'Hubo un error al tratar de agregar un nuevo viaje disponible '+email}),400
 
