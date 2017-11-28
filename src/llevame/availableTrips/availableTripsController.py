@@ -2,7 +2,7 @@ from flask import Blueprint,request,jsonify
 from . import availableTripsService
 from . import availableTripsRequestValidator
 import logging
-from firebase import firebase_service as firebaseService
+from my_firebase import firebase_service as firebaseService
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)

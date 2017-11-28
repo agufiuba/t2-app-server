@@ -1,17 +1,27 @@
 from pymongo import MongoClient
 from bson.json_util import dumps
 import sys
+import logging
+from my_firebase import firebase_service as firebaseService
+
+
+#Configuración del loggin
+FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
+logging.basicConfig(format=FORMAT,level=logging.INFO)
+log_info = {'clientip': '192.168.0.1', 'service': 'driversService'}
+
 
 this = sys.modules[__name__]
 this.drivers = []
 
 
 
-# Devuelve un BSON con los choferes disponibles.
-def get_drivers():
-    return true
+def getDriversAroundFrom(position):
+    logging.info('getDriversAroundFrom',extra=log_info)
+    firebaseService.imprimir()
+    return False
 
 # El ID es firebase id
 def login_driver(ID):
-    this.drivers.push(ID)
-    return true;
+    this.drivers.append(ID)
+    return True
