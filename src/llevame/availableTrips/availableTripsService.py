@@ -46,5 +46,7 @@ def getAvailableTravels():
 
 
 
-def getFromPosition(email):
-    return true;
+def getStartingPosition(email):
+    logging.info('Se esta solicitando la posición de partida del usuario:'+email,extra=log_info)
+    cursor = this.db.trips.find({'email':email})
+    return cursor['from']
