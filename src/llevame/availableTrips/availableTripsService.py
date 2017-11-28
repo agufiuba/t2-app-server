@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 import logging
 import sys
+
 this = sys.modules[__name__]
 this.db = None
 
@@ -42,3 +43,8 @@ def getAvailableTravels():
         travel = {}
         response.append({'email':document['email'],'from':document['from'],'to':document['to'],'km':document['km']})
     return response
+
+
+
+def getFromPosition(email):
+    return true;

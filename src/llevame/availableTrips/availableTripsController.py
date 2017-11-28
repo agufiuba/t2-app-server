@@ -17,11 +17,9 @@ availableTripsController = Blueprint('availableTripsController',__name__)
 @availableTripsController.route('/availableTrip',methods=['POST'])
 def addTravelAvailable():
     logging.info('Llegó un reques PUT en el /travels',extra=log_info)
-    #validate = availableTripsRequestValidator.validate(request)
-    #token = request.headers['Authorization']
-    #email = firebaseService.validate_token(token)
-    validate = 'ok'
-    email = 'argentino_darius@hotmail.com'
+    validate = availableTripsRequestValidator.validate(request)
+    token = request.headers['Authorization']
+    email = firebaseService.validate_token(token)
     if validate != 'ok':
         return validate,400
     response = availableTripsService.addTravel(email,request.get_json())
