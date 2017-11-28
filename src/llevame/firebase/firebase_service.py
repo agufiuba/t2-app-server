@@ -22,3 +22,12 @@ def validate_token(id_token):
     user = auth.get_user(uid)
     logging.info('el user es:'+str(user.email)+"",extra=log_info)
     return str(user.email)
+
+
+def getUID(token):
+    decoded_token = auth.verify_id_token(token)
+    uid = decoded_token['uid']
+    logging.info('Obtenido UID'+uid,extra=log_info)
+    user = auth.get_user(uid)
+    logging.info('Se obtuvo el UID del usuario:'+str(user.email)+"",extra=log_info)
+    return uid
