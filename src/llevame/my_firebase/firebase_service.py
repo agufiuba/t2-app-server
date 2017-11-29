@@ -80,5 +80,5 @@ def getDriversArounPosition(passengerPosition,driversListID):
         logging.info('Se obtuvo la siguiente respuesta de firebase:'+driverPositionString,extra=log_info)
         driverPosition = positionTransformer.parserStringToPosition(str(ref.get()))
         if calculateDistance(passengerPosition,driverPosition) <= 100 :
-            nearbyDriverIDsList.append(driverID)
+            nearbyDriverIDsList.append({'id':driverID,'pos':driverPosition})
     return nearbyDriverIDsList
