@@ -105,8 +105,33 @@ Este tiene 2 responsabilidades:
 
 ### Servicio de choferes
 
-Se encarga de informar los choferes disponibles.
+Obtener los choferes disponibles.
 
++ Verbo REST: GET
++ Body: 
+       
+       {'Authorization':'xxxx'}
+
++ URL: /drivers?pos=lat/lng: (-34.6220855,-58.3832781)
++ Response: La lista de los id de los drivers cercanos al pasajero
+          
+          {
+          'drivers':[id1,id2,id3]
+          }
+          
+ 
+
+Agregar un chofer disponible
+
+
++ Verbo REST: POST
++ Body: 
+       
+       {'Authorization':'xxxx'}
+       
+ + Response:
+       
+       {'message': 'Se agrego de manera correcta al chofer de xxxx'}
 
 ### Servicio de posicionamiento
 
