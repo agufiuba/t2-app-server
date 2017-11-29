@@ -17,6 +17,7 @@ def login(request):
     id_token = request.headers['Authorization']
     session_token = request.headers['Session']
     logging.info('Se obtuvo el siquiente token del app android: '+id_token,extra=log_info)
+    logging.info('Se obtuvo el siquiente token de session: '+session_token,extra=log_info)
     email = firebaseService.validate_token(id_token)
     userID = firebaseService.getUID(id_token)
     #Me guardo el token de session
