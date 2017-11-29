@@ -2,8 +2,7 @@ import requests
 import json
 from . import dataTransformatorQueryParams as transformator
 import logging
-
-
+import os
 
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -12,7 +11,8 @@ log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
 
 
 token = ''
-shared_server_addr = "http://shared-server:4000"
+shared_server_addr = os.environ["SHARED_SERVER_ADDR"]
+logging.info("La dirección del shared server es: " + shared_server_addr, extra=log_info)
 
 def getToken():
     logging.info("Obteniendo el token de autenticacion",extra=log_info)
