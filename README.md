@@ -108,7 +108,7 @@ Este tiene 2 responsabilidades:
 Obtener los choferes disponibles.
 
 + Verbo REST: GET
-+ Body: 
++ Header: 
        
        {'Authorization':'xxxx'}
 
@@ -123,9 +123,9 @@ Obtener los choferes disponibles.
 
 Agregar un chofer disponible
 
-
++ URL: /drivers
 + Verbo REST: POST
-+ Body: 
++ Header: 
        
        {'Authorization':'xxxx'}
        

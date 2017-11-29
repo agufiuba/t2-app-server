@@ -18,12 +18,15 @@ payment_controller = Blueprint('paymentController',__name__)
 def getPaymentMethods():
     token = request.headers['Authorization']
     email = firebaseService.validate_token(token)
-    user = sharedService.getUserFromEmail(email)
-    user = ''
-    if user != None:
-        payMethodsList = paymentService.getPaymentMethods()
-        if payMethodsList != None:
-            return jsonify({'methods':payMethodsList}),200
-        return jsonify({'message':'No se pudo obtener los medios de pagos'}),400
+    if email != None:
+        user = sharedService.getUserFromEmail(email)
+        if user != None:
+            payMethodsList = paymentService.getPaymentMethods()
+            if payMethodsList != None:
+                return jsonify({'methods':payMethodsList}),200
+            else:
+                return jsonify({'message':'No se pudo obtener los medios de pagos'}),400
+        else:
+            return jsonify({'message':'El usuario no se encuentra registrado'}),400
     else:
-        return jsonify({'message':'El usuario no se encuentra registrado'}),400
+        return jsonify({'message':'El token esta expirado'}),400
