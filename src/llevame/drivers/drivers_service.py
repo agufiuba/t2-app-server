@@ -16,10 +16,11 @@ this.drivers = []
 
 
 
-def getDriversAroundFrom(position):
+def getDriversAroundFrom(passengerPosition):
     logging.info('getDriversAroundFrom',extra=log_info)
-    firebaseService.imprimir()
-    return False
+    return firebaseService.getDriversArounPosition(passengerPosition,this.drivers)
+
+    
 
 # El ID es firebase id
 def login_driver(ID):
