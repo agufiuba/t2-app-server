@@ -61,8 +61,7 @@ def getCostFromDistanceInKM(userEmail,distanceInKM):
     url = shared_server_addr+'/cost/'+userEmail+'/'+str(distanceInKM)
     logging.info('Realizo request al shared server con el siguiente request',extra=log_info)
     res = requests.get(url)
-
-
+    return json.loads(res.text)
 
 
 

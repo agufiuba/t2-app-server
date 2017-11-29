@@ -39,3 +39,18 @@ def login_driver():
     ID = firebaseService.getUID(token)
     driverService.login_driver(ID)
     return jsonify({'message':'Se agrego de manera correcta al chofer de email'+email}),200
+
+
+@drivers_controller.route('/drivers',methods=['DELETE'])
+def deleter_driver():
+    logging.info('Llegó una solicitud DELETE',extra=log_info)
+    token = request.headers['Authorization']
+    email = firebaseService.validate_token(token)
+    if email != None:
+        logging.info('El usuario existe, procediendo a eliminar el usuario de choferes disponibles',extra=log_info)
+        ID = firebaseService.getUID(token)
+        driverService.deleter_driver(ID)
+        return jsonify({'message':'Se eliminó de manera correcta al chofer de email'+email}),200
+    else:
+        logging.info('El usuario no existe',extra=log_info)
+        return jsonify({'message':'El usuario no existe en la base de datos'+email}),400

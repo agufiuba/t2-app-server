@@ -32,7 +32,7 @@ def validate_token(id_token):
         user = auth.get_user(uid)
         logging.info('el user es:'+str(user.email)+"",extra=log_info)
     except ValueError:
-        loggin.info('Hubo un error al tratar de iniciar la sesión',extra=log_info)
+        logging.info('Hubo un error al tratar de iniciar la sesión',extra=log_info)
         return None
     return str(user.email)
 
