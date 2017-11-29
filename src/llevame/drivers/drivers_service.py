@@ -1,18 +1,28 @@
 from pymongo import MongoClient
 from bson.json_util import dumps
+import sys
+import logging
+from my_firebase import firebase_service as firebaseService
 
-class DriversService():
-    def __init__(self, db_url, db = "t2"):
-        self.client = MongoClient(db_url)
-        self.db = self.client[db] # TODO añadir opción de cambio de BDD.
 
-    # Devuelve un BSON con los choferes disponibles.
-    def get_drivers(self):
-        return dumps([doc for doc in self.db.drivers.find()])
+#Configuración del loggin
+FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
+logging.basicConfig(format=FORMAT,level=logging.INFO)
+log_info = {'clientip': '192.168.0.1', 'service': 'driversService'}
 
-    # Añade a la BDD un chofer.
-    def login_driver(self, id):
-        self.db.drivers.insert_one({ "id": int(id) })
 
-    # TODO Lo quita de la base de datos.
-    # def logout_driver(self, id):
+this = sys.modules[__name__]
+this.drivers = []
+
+
+
+def getDriversAroundFrom(passengerPosition):
+    logging.info('getDriversAroundFrom',extra=log_info)
+    return firebaseService.getDriversArounPosition(passengerPosition,this.drivers)
+
+    
+
+# El ID es firebase id
+def login_driver(ID):
+    this.drivers.append(ID)
+    return True

@@ -1,4 +1,4 @@
-from firebase import firebase_service as firebaseService
+from my_firebase import firebase_service as firebaseService
 from shared_service import shared_server_service as sharedService
 import logging
 
@@ -19,7 +19,12 @@ def login(request):
     user =  sharedService.getUserFromEmail(email)
     if user != None:
         logging.info('El logueo fue exitoso para el usuario de email ['+email+']',extra=log_info)
-        return True
-
+        return convertType(int(user['type']))
     logging.info('El usuario no pudo loguearse porque no se encuentra en la db',extra=log_info)
-    return False
+    return None
+
+
+def convertType(idType):
+    if idType == 1:
+        return 'passenger'
+    return 'driver'

@@ -128,8 +128,7 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
         'from': '-34.617952,-58.385983',
         'to': '-34.617952,-58.385983',
       }
-      
-      
+
 
 + URL: http://uri:port/availableTrip
 

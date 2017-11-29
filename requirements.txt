@@ -8,3 +8,4 @@ pyyaml
 firebase-admin
 pymongo
 doxypypy
+python-firebase
