@@ -1,5 +1,5 @@
 from flask import Blueprint,request
-from firebase import firebase_service as firebaseService
+from my_firebase import firebase_service as firebaseService
 from . import positionRequestValidator
 
 position_controller = Blueprint('position_controller',__name__)

@@ -1,7 +1,6 @@
-
 from flask import Blueprint,request,jsonify
 import logging
-from firebase import firebase_service as firebaseService
+from my_firebase import firebase_service as firebaseService
 from . import paymentService
 from shared_service import shared_server_service as sharedService
 

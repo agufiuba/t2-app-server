@@ -1,4 +1,4 @@
-from firebase import firebase_service as firebaseService
+from my_firebase import firebase_service as firebaseService
 from shared_service import shared_server_service as sharedService
 import logging
 
