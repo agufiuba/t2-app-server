@@ -28,12 +28,13 @@ def notificate(sessionID):
 	 }
     }
     date_to_notification = {
-        to:sessionID,
-    	notification: {
-    	title": Portugal vs. Denmark,
-    	body: 5 to 1,
+        'to':sessionID,
+    	'notification': {
+    	'title': 'Portugal vs. Denmark',
+    	'body': '5 to 1',
 		'click_action' : 'MainActivity'
 	}
     }
-    requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=data_to_send)
+    requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=data_to_active_listener)
+    requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=date_to_notification)
     return True
