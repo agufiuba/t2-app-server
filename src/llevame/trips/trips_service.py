@@ -1,5 +1,6 @@
 import sys
 import logging
+from notification import notification_service as notificationService
 
 #Configuración del loggin
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -11,6 +12,8 @@ this = sys.modules[__name__]
 this.trips = {}
 
 
-def addTrip(passengerID,driverID):
+def addTrip(passengerID,driverID,fromPos,toPos):
     this.trips[passengerID] = driverID
+    data = {'passengerID':passengerID,'from':fromPos,'to':toPos}
+    notificationService.notificate_user(driverID,data)
     return True

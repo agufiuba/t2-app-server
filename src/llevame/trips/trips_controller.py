@@ -29,8 +29,10 @@ def add_trip():
         if user != None:
             logging.info('El usuario '+email+' sí se encuentra registrado en nuestra db',extra=log_info)
             driverID = request.get_json()['driverID']
+            fromPos = request.get_json()['from']
+            toPos = request.get_json()['to']
             passengerID = firebaseService.getUID(passengerToken)
-            if tripsService.addTrip(passengerID,driverID):
+            if tripsService.addTrip(passengerID,driverID,fromPos,toPos):
                 return jsonify({'message':'Se agrego el viaje de manera correcta'}),200
             else:
                 return jsonify({'message':'Hubo un error el tratar de agregar el viaje'}),400

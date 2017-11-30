@@ -9,31 +9,31 @@ FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
 
-def notificate_user(userID):
+def notificate_user(userID,data):
     logging.info('Se esta notificando al usuario:'+userID,extra=log_info)
     session_list = sessionService.getSessionsList(userID)
     for session in session_list:
         notificate(session)
     return True
 
-def notificate(sessionID):
+def notificate(sessionID,data):
+
     data_to_active_listener = {
     'to':sessionID,
     'android':{
 	   'ttl':'86400s',
 		    'notification' : {
-    		'title': 'Titulo',
-    		'body': 'Cuerpo de la notificacion',
+    		'title': 'Nuevo Viaje',
+    		'body': 'Un usuario a elegido viajar con vos',
 		     }
 	 }
     }
+    
     date_to_notification = {
         'to':sessionID,
     	'notification': {
-    	'title': 'Portugal vs. Denmark',
-    	'body': '5 to 1',
-		'click_action' : 'MainActivity'
-	}
+    	   'data':data
+	     }
     }
     requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=data_to_active_listener)
     requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=date_to_notification)

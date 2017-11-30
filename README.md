@@ -94,6 +94,41 @@ Los puntos suspensivos serian los datos que se quieren actualizar
 + URL: http://uri:port/user/{id_user}
 
 
++ Respuesta si es un pasajero
+            
+            {
+                type: 'passenger'
+                name: 'name',
+                last_name: 'apellido',
+                email: 'email',
+                car:{
+                        'number':'xxx',
+                        'typeCard':'xxxxx',
+                        'securityCode':'xxxxxx',
+                        'expirationYear':'xxxxx',
+                        'expirationMonth':'xxxxxx'
+                  }
+            }
+         
++ Respuesta si es chofer:
+            
+            
+         {
+            type: 'driver'
+            name: 'xxxxx',
+            last_name: 'xxxxx',
+            email: 'xxxx',
+            car:{
+                  model: 'xxxx',
+                  color: 'xxxx',
+                  patent: 'xxxxx',
+                  year: 'xxxxx',
+                  state: ['good','bad','maso'],
+                  air_conditioner:'hp',
+                  music:['radio','album']
+                  }
+            }
+            
 
 ### Servicio de viaje
 
@@ -107,7 +142,11 @@ Agregar un viaje que se va a realizar
 
 + Body:
       
-      {'driverID':'xxxx'}
+      {
+      'driverID':'xxxx',
+      'from':'xxxx',
+      'to':'xxxxx'
+      }
 
 
 ### Servicio de choferes
