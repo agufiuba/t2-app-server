@@ -19,7 +19,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'tripCostService'}
 def getCostAndDistance(userEmail,fromString,toString):
     dictWithSomeParameters = getDistanceInKm(fromString,toString)
     if dictWithSomeParameters != None:
-        cost = sharedService.getCostFromDistanceInKM(userEmail,dictWithSomeParameters['distance'])
+        cost = sharedService.getCostFromDistanceInKM(userEmail,dictWithSomeParameters['distance'].split('k')[0])
         dictWithSomeParameters['cost'] = 0
         return dictWithSomeParameters
     else:
