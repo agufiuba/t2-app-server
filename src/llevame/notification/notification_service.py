@@ -17,6 +17,23 @@ def notificate_user(userID):
     return True
 
 def notificate(sessionID):
-    data_to_send = {'to':sessionID,'data':'aaaaaaaaaaaaa'}
+    data_to_active_listener = {
+    'to':sessionID,
+    'android':{
+	   'ttl':'86400s',
+		    'notification' : {
+    		'title': 'Titulo',
+    		'body': 'Cuerpo de la notificacion',
+		     }
+	 }
+    }
+    date_to_notification = {
+        to:sessionID,
+    	notification: {
+    	title": Portugal vs. Denmark,
+    	body: 5 to 1,
+		'click_action' : 'MainActivity'
+	}
+    }
     requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=data_to_send)
     return True
