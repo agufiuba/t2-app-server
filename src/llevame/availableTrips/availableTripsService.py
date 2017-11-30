@@ -16,6 +16,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'travelsService'}
 
 def init(db_url,db="t2"):
     logging.info('Se inicializa el servicio con la db',extra=log_info)
+    logging.info('URL de DB: ' + str(db_url),extra=log_info)
     this.db = MongoClient(db_url)[db]
 
 
