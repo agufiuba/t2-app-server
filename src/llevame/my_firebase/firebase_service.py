@@ -6,12 +6,18 @@ import logging
 from math import radians, cos, sin, asin, sqrt
 from utils import positionTransformer
 import os
+import sys
+
 
 #Configuracion del login
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'firebaseService'}
 
+
+
+this = sys.modules[__name__]
+this.emails = {}
 
 #Configuracion de firebase
 logging.info('Obteniendo credenciales',extra=log_info)
@@ -31,6 +37,7 @@ def validate_token(id_token):
         logging.info('decoded_token'+uid,extra=log_info)
         user = auth.get_user(uid)
         logging.info('el user es:'+str(user.email)+"",extra=log_info)
+        addEmailAndUid(str(user.email),uid)
     except ValueError:
         logging.info('Hubo un error al tratar de iniciar la sesión',extra=log_info)
         return None
@@ -83,3 +90,12 @@ def getDriversArounPosition(passengerPosition,driversListID):
         if calculateDistance(passengerPosition,driverPosition) <= 100 :
             nearbyDriverIDsList.append({'id':driverID,'pos':driverPosition})
     return nearbyDriverIDsList
+
+
+def addEmailAndUid(email,UID):
+    logging.info('Agregando el UID: '+UID+'y el email: '+email)
+    emails[UID] = email
+
+
+def getEmailFromUid(UID):
+    return emails[UID]

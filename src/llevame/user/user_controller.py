@@ -2,6 +2,7 @@ from flask import Blueprint,request,jsonify
 import logging
 from . import user_validator
 from . import user_service as userService
+from my_firebase import firebase_service as firebaseService
 
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -33,10 +34,10 @@ def update_user():
     return jsonify({'message':'Se actualizo la información del usuario de manera correcta'}), 200
 
 
-@user_controller.route('/user/<email>',methods=['GET'])
-def see_user(email):
+@user_controller.route('/user/<UID>',methods=['GET'])
+def see_user(UID):
     logging.info('Se recibio un Request GET', extra=log_info)
-    user = userService.getUser(email)
+    user = userService.getUser(firebaseService.getEmailFromUid(UID))
     if (user != None):
         return jsonify(user),200
     return jsonify({'message':'Hubo un error al tratar de obtener la información de usuario'+email}),400
