@@ -97,10 +97,17 @@ Los puntos suspensivos serian los datos que se quieren actualizar
 
 ### Servicio de viaje
 
-Este tiene 2 responsabilidades:
+Agregar un viaje que se va a realizar
 
-+ Cotizar los viajes
-+ Informar los viajes disponibles
++ URL: /trips
++ Verbo REST: POST
++ Header: 
+      
+      {'Authorization':'xxxx'}
+
++ Body:
+      
+      {'driverID':'xxxx'}
 
 
 ### Servicio de choferes
