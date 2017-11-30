@@ -16,11 +16,12 @@ availableTripsController = Blueprint('availableTripsController',__name__)
 
 @availableTripsController.route('/availableTrip',methods=['POST'])
 def addTravelAvailable():
-    logging.info('Llegó un reques PUT en el /travels',extra=log_info)
+    logging.info('Llegó un reques POST en el /availableTrip',extra=log_info)
     validate = availableTripsRequestValidator.validate(request)
     token = request.headers['Authorization']
     email = firebaseService.validate_token(token)
     if validate != 'ok':
+        logging.info('La validacion del request no fue ok',extra=log_info)
         return validate,400
     response = availableTripsService.addTravel(email,request.get_json())
     if response != None:
