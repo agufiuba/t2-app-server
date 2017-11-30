@@ -93,7 +93,7 @@ def getDriversArounPosition(passengerPosition,driversListID):
 
 
 def addEmailAndUid(email,UID):
-    logging.info('Agregando el UID: '+UID+'y el email: '+email)
+    logging.info('Agregando el UID: '+UID+'y el email: '+email,extra=log_info)
     emails[UID] = email
 
 
