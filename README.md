@@ -107,7 +107,11 @@ Agregar un viaje que se va a realizar
 
 + Body:
       
-      {'driverID':'xxxx'}
+      {
+      'driverID':'xxxx',
+      'from':'xxxx',
+      'to':'xxxxx'
+      }
 
 
 ### Servicio de choferes
