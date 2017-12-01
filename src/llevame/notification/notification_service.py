@@ -23,17 +23,17 @@ def notificate(sessionID,data):
     'android':{
 	   'ttl':'86400s',
 		    'notification' : {
-    		'title': 'Nuevo Viaje',
-    		'body': 'Un usuario a elegido viajar con vos',
+    		  'data':data
 		     }
 	 }
     }
-    
+
     date_to_notification = {
         'to':sessionID,
-    	'notification': {
-    	   'data':data
-	     }
+    	'notification' : {
+            'title': 'Nuevo Viaje',
+            'body': 'Un usuario a elegido viajar con vos',
+         }
     }
     requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=data_to_active_listener)
     requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=date_to_notification)
