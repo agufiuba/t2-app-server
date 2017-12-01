@@ -2,7 +2,7 @@ from flask import Flask,Blueprint
 from user.user_controller import build_user_controller
 from availableTrips.availableTripsController import build_available_trips_controller
 from position.position_controller import position_controller
-from drivers.drivers_controller import drivers_controller
+from drivers.drivers_controller import build_drivers_controller
 from path.path_controller import path_controller
 from parameters.parametersController import parameters_controller
 from login.login_controller import build_login_controller
@@ -44,7 +44,7 @@ def build_app(interfaces = None):
     app.register_blueprint(build_user_controller(interfaces))
     app.register_blueprint(path_controller)
     app.register_blueprint(build_available_trips_controller(interfaces))
-    app.register_blueprint(drivers_controller)
+    app.register_blueprint(build_drivers_controller(interfaces))
     app.register_blueprint(position_controller)
     app.register_blueprint(build_login_controller(interfaces))
     app.register_blueprint(main_controller)
