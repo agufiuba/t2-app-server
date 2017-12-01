@@ -18,7 +18,7 @@ services:
       - PROD=$PROD
       - PORT=$PORT
       - DATABASE_URL=$DATABASE_URL
-      - MONGO_URI=mdb
+      - MONGO_URI=mongodb://mdb
       - SHARED_SERVER_ADDR=http://shared-server:4000
     ports:
       - "$PORT:3000"
