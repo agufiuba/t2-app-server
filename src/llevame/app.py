@@ -1,5 +1,5 @@
 from flask import Flask,Blueprint
-from user.user_controller import user_controller
+from user.user_controller import build_user_controller
 from availableTrips.availableTripsController import build_available_trips_controller
 from position.position_controller import position_controller
 from drivers.drivers_controller import drivers_controller
@@ -41,7 +41,7 @@ def build_app(interfaces = None):
     logging.info('Iniciando aplicación',extra=log_info)
     interfaces.get_shared_server_service().getToken()
 
-    app.register_blueprint(user_controller)
+    app.register_blueprint(build_user_controller(interfaces))
     app.register_blueprint(path_controller)
     app.register_blueprint(build_available_trips_controller(interfaces))
     app.register_blueprint(drivers_controller)
