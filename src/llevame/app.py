@@ -3,7 +3,7 @@ from user.user_controller import build_user_controller
 from availableTrips.availableTripsController import build_available_trips_controller
 from position.position_controller import build_position_controller
 from drivers.drivers_controller import build_drivers_controller
-from parameters.parametersController import parameters_controller
+from parameters.parametersController import build_parameters_controller
 from login.login_controller import build_login_controller
 from shared_service import shared_server_service as SharedService
 from payment.paymentController import payment_controller
@@ -45,7 +45,7 @@ def build_app(interfaces = None):
     app.register_blueprint(build_position_controller(interfaces))
     app.register_blueprint(build_login_controller(interfaces))
     app.register_blueprint(main_controller)
-    app.register_blueprint(parameters_controller)
+    app.register_blueprint(build_parameters_controller(interfaces))
     app.register_blueprint(payment_controller)
     return app
 
