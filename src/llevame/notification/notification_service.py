@@ -3,7 +3,7 @@ import requests
 import logging
 
 
-keyServer = 'AAAAa-B0L4s:APA91bEFBz2dBB9GtVYrR-L6YFccRgU7UmnlCnklcAQ41YsZNRthG06IwR_oQUT2BQbJ81ItHXpbZkbSbRJRmJS_jwy-aXdusvZ85gLlowE92Cx3oDRtxlmOzQ1RvxCl_L4KDSWpD9Ub'
+keyServer = 'AAAAa-B0L4s:APA91bFGGWPnw2nHxvM7xaVN-S9sSKAajA7KAfwH2u65ytDxHkZ1n9uGeIfWvBK6PYmtfNwjSOeKC-AKUeJCV_PmaBzDYtwCa96pK5PEi2tU4GQs6Qbd0kftRyf1QzmppNVezKuqgbN6'
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -23,17 +23,17 @@ def notificate(sessionID,data):
     'android':{
 	   'ttl':'86400s',
 		    'notification' : {
-    		'title': 'Nuevo Viaje',
-    		'body': 'Un usuario a elegido viajar con vos',
+    		  'data':data
 		     }
 	 }
     }
-    
+
     date_to_notification = {
         'to':sessionID,
-    	'notification': {
-    	   'data':data
-	     }
+    	'notification' : {
+            'title': 'Nuevo Viaje',
+            'body': 'Un usuario a elegido viajar con vos',
+         }
     }
     requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=data_to_active_listener)
     requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=date_to_notification)
