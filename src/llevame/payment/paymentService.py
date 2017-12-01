@@ -1,7 +1,7 @@
-from shared_service import shared_server_service as sharedService
+class PaymentService:
+    def __init__(self, interfaces):
+        self.shared_service = interfaces.get_shared_server_service()
 
-
-
-def getPaymentMethods():
-    response = sharedService.getPayMethods()
-    return sharedResponse['items']
+    def getPaymentMethods(self):
+        response = self.sharedService.getPayMethods()
+        return sharedResponse['items']
