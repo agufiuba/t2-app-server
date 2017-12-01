@@ -10,7 +10,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'userController'}
 def build_user_controller(interfaces):
     user_controller = Blueprint('user_controller',__name__)
     firebaseService = interfaces.get_firebase_service()
-    user_service = UserService(interfaces)
+    userService = UserService(interfaces)
 
     @user_controller.route('/user',methods=['POST'])
     def add_user():
