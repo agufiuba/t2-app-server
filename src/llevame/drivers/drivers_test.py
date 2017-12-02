@@ -1,5 +1,5 @@
 import unittest
-from app import build_app
+from app_builder import build_app
 from my_firebase.firebase_dummy import FirebaseDummy
 from interfaces import Interfaces
 from shared_service.shared_service_dummy import SharedServiceDummy
