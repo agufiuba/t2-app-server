@@ -5,7 +5,7 @@ from interfaces import Interfaces
 from shared_service.shared_service_dummy import SharedServiceDummy
 import os
 
-import json
+from flask import json
 
 class TestDriversService(unittest.TestCase):
     def setUp(self):
