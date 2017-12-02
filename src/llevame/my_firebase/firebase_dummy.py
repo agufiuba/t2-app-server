@@ -1,4 +1,5 @@
 from .firebase_service import haversine
+from utils import positionTransformer
 import logging
 
 #Configuracion del login
@@ -18,21 +19,28 @@ class FirebaseDummy:
         else:
             return None
 
-    def add_user(self, token, user):
+    # (Método para tests) El token es una string y el usuario es un diccionario.
+    def add_user(self, token, user, pos):
         self.datos_segun_token[token] = user
+        self.posiciones_segun_driver_id[user["id"]] = pos
         self.addEmailAndUid(user["mail"], user["id"])
+
+    # (Método para tests) Se asume que la lista tiene duplas (token, usuario).
+    def add_user_list(self, users):
+        for user in users:
+            self.add_user(user[0], user[1], user[2])
 
     def getUID(self, token):
         return self.datos_segun_token[token]["id"]
 
     def calculateDistance(self, position,otherPosition):
-        return self.haversine(position['lng'],position['lat'],otherPosition['lng'],otherPosition['lat'])
+        return haversine(position['lng'],position['lat'],otherPosition['lng'],otherPosition['lat'])
 
     def getDriversArounPosition(self, passengerPosition,driversListID):
         # TODO esto le corresponde más al servicio de drivers que al de firebase.
         nearbyDriverIDsList = []
         for driverID in driversListID:
-            driverPosition = positionTransformer.parserStringToPosition(str(ref.get()))
+            driverPosition = positionTransformer.parserStringToPosition(self.posiciones_segun_driver_id[driverID])
             if self.calculateDistance(passengerPosition,driverPosition) <= 100 :
                 nearbyDriverIDsList.append({'id':driverID,'pos':driverPosition})
         return nearbyDriverIDsList
@@ -41,4 +49,4 @@ class FirebaseDummy:
         self.emails[UID] = email
 
     def getEmailFromUid(self, UID):
-        return self.emails[UID]
+        return self.emails.get(UID, None)
