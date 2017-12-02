@@ -53,6 +53,6 @@ def build_drivers_controller(interfaces):
             return jsonify({'message':'Se eliminó de manera correcta al chofer de email'+email}),200
         else:
             logging.info('El usuario no existe',extra=log_info)
-            return jsonify({'message':'El usuario no existe en la base de datos'+email}),400
+            return jsonify({'message':'El usuario no existe en la base de datos'}),400
 
     return drivers_controller
