@@ -84,6 +84,7 @@ def getDriversArounPosition(passengerPosition,driversListID):
     logging.info('Se esta calculando las posiciones cercanas al pasajero',extra=log_info)
     for driverID in driversListID:
         ref = db.reference(driverID)
+        # TODO es necesario o siquiera razonable hacer dos res.get? no es mejor guardarlo?
         driverPositionString = str(ref.get())
         logging.info('Se obtuvo la siguiente respuesta de firebase:'+driverPositionString,extra=log_info)
         driverPosition = positionTransformer.parserStringToPosition(str(ref.get()))
@@ -98,4 +99,4 @@ def addEmailAndUid(email,UID):
 
 
 def getEmailFromUid(UID):
-    return emails[UID]
+    return emails.get(UID, None)
