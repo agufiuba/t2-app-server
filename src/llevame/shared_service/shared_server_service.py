@@ -30,19 +30,23 @@ def getToken():
 
 def addUser(user):
     logging.info('Agregando un usuario',extra=log_info)
+    #Setup
     stringQuery = transformator.transformate(user)
     url = shared_server_addr+'/users'+'?'+stringQuery;
     logging.info('Realizando un POST al shared server con url ['+url+']',extra=log_info)
-    res = requests.post(url)
+    #Realizando request
+    res = requests.post(url,headers = {'Authorization':token})
     logging.info('Se recibio un '+ str(res.status_code)+" del shared server",extra=log_info)
     return res.status_code == 200 or res.status_code == 201
 
 
 def getUserFromEmail(email):
     logging.info('Obteniendo información del usuario ['+email+']',extra=log_info)
+    #Setup
     url = shared_server_addr+'/users/'+email
     logging.info('Realizando GET al shared server con url +['+url+']',extra=log_info)
-    res = requests.get(url)
+    #Realizando request
+    res = requests.get(url,headers = {'Authorization':token})
     code = res.status_code
     if code != 200 and code !=201 :
         logging.info('Hubo un problema al tratar de obtener información del user',extra=log_info)
@@ -60,7 +64,8 @@ def getCostFromDistanceInKM(userEmail,distanceInKM):
     logging.info('Calculando la el costo de viaje para '+userEmail+' y distancia '+str(distanceInKM),extra=log_info)
     url = shared_server_addr+'/costos/'+userEmail+'/'+str(distanceInKM)
     logging.info('Realizo request al shared server con el siguiente request'+url,extra=log_info)
-    res = requests.get(url)
+    #Realizando request
+    res = requests.get(url,headers = {'Authorization':token})
     return json.loads(res.text)
 
 
@@ -69,5 +74,14 @@ def getPayMethods():
     logging.info('Llegó una solicitud para poder obtener los medios de pagos',extra=log_info)
     url = shared_server_addr+'/paymethods'
     logging.info('Se esta enviando un GET a la siguiente url'+url,extra=log_info)
-    res = requests.get(url)
+    res = requests.get(url,headers = {'Authorization':token})
+    return json.loads(res.text)
+
+
+def getCarInfo(email):
+    logging.info('Llegó una solicitud para poder obtener información de un auto de:'+email,extra=log_info)
+    url = shared_server_addr+'/cars/'+email
+    logging.info('Realizo request al shared server con el siguiente request'+url,extra=log_info)
+    #Realizando request
+    res = requests.get(url,headers = {'Authorization':token})
     return json.loads(res.text)

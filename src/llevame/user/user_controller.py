@@ -43,4 +43,12 @@ def build_user_controller(interfaces):
         logging.info('Se recibio un Request DELETE', extra=log_info)
         return jsonify({'message':'Se pudo eliminar el usuario de manera correcta'}), 200
 
+
+
+    @user_controller.route('/user/driver/<UID>',methods=['GET'])
+    def get_driver(UID):
+        logging.info('Se recibo un request GET en user/driver/',extra=log_info)
+        return jsonify(userService.getDriverFromUID(UID)),200
+
+
     return user_controller
