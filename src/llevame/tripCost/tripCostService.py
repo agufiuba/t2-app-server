@@ -25,7 +25,7 @@ this.cacheGooleResponses = {}
 def getCostAndDistance(userEmail,fromString,toString):
     dictWithSomeParameters = getGoogleResponse(fromString,toString)
     if dictWithSomeParameters != None:
-        addResponseInCache(fromString,toString.dictWithSomeParameters)
+        addResponseInCache(fromString,toString,dictWithSomeParameters)
         cost = sharedService.getCostFromDistanceInKM(userEmail,dictWithSomeParameters['distance'].split('k')[0])
         dictWithSomeParameters['cost'] = cost
         return dictWithSomeParameters
@@ -45,7 +45,7 @@ def getGoogleResponse(fromString,toString):
 
 
 def addResponseInCache(fromString,toString,data):
-    cacheResults[(fromString,toString)] = dictWithSomeParameters
+    cacheGooleResponses[(fromString,toString)] = data
 
 
 def ifItIsInResultsCache(fromString,toString):
