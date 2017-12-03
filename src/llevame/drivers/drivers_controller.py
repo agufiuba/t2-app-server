@@ -34,6 +34,7 @@ def build_drivers_controller(interfaces):
 
     @drivers_controller.route('/drivers', methods=["POST"])
     def login_driver():
+        logging.info('Llegó una solicitud POST',extra=log_info)
         token = request.headers['Authorization']
         email = firebaseService.validate_token(token)
         ID = firebaseService.getUID(token)

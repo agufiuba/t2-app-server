@@ -76,3 +76,12 @@ def getPayMethods():
     logging.info('Se esta enviando un GET a la siguiente url'+url,extra=log_info)
     res = requests.get(url,headers = {'Authorization':token})
     return json.loads(res.text)
+
+
+def getCarInfo(email):
+    logging.info('Llegó una solicitud para poder obtener información de un auto de:'+email,extra=log_info)
+    url = shared_server_addr+'/cars/'+email
+    logging.info('Realizo request al shared server con el siguiente request'+url,extra=log_info)
+    #Realizando request
+    res = requests.get(url,headers = {'Authorization':token})
+    return json.loads(res.text)

@@ -1,4 +1,6 @@
 import logging
+from my_firebase import firebase_service as firebaseService
+
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -32,3 +34,8 @@ class UserService:
         if idType == 1:
             return 'passenger'
         return 'driver'
+
+    def getDriverFromUID(self,UID):
+        email = firebaseService.getEmailFromUid(UID)
+        car = self.sharedService.getCarInfo(email)
+        return {'car':car}

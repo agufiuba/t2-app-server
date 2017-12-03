@@ -2,6 +2,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth
 from firebase_admin import db
+
 import logging
 from math import radians, cos, sin, asin, sqrt
 from utils import positionTransformer
@@ -98,5 +99,8 @@ def addEmailAndUid(email,UID):
     emails[UID] = email
 
 
-def getEmailFromUid(UID):
-    return emails.get(UID, None)
+def getEmailFromUid(uid):
+        logging.info('Se esta pidiendo obtener el email del UID: '+uid,extra=log_info)
+        user = auth.get_user(uid)
+        logging.info('el user es:'+str(user.email)+"",extra=log_info)
+        return str(user.email)
