@@ -36,6 +36,7 @@ def getCostAndDistance(userEmail,fromString,toString):
 
 def getGoogleResponse(fromString,toString):
     #Si ya se realizo la busqueda alguna vez, lo obtengo
+    logging.info('Obteniendo la respuesta de google',extra=log_info)
     if ifItIsInResultsCache(fromString,toString):
         dictWithSomeParameters = cacheResults[(fromString,toString)]
     else:
