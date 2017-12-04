@@ -101,34 +101,25 @@ Los puntos suspensivos serian los datos que se quieren actualizar
                 name: 'name',
                 last_name: 'apellido',
                 email: 'email',
-                car:{
-                        'number':'xxx',
-                        'typeCard':'xxxxx',
-                        'securityCode':'xxxxxx',
-                        'expirationYear':'xxxxx',
-                        'expirationMonth':'xxxxxx'
-                  }
             }
+### Obtener información del auto de un usuario
 
-+ Respuesta si es chofer:
++ URL: http://uri:port/user/driver/<uid>
++ verbo REST: GET
+      
++ Respuesta:
 
-
-         {
-            type: 'driver'
-            name: 'xxxxx',
-            last_name: 'xxxxx',
-            email: 'xxxx',
-            car:{
-                  model: 'xxxx',
-                  color: 'xxxx',
-                  patent: 'xxxxx',
-                  year: 'xxxxx',
-                  state: ['good','bad','maso'],
-                  air_conditioner:'hp',
-                  music:['radio','album']
+            {
+             "car": {
+                  "air_conditioner": "Sí",
+                  "color": "Azul",
+                  "model": "Toyota Hilux",
+                  "music": "Clasica",
+                  "patent": "12345678",
+                  "state": "Excelente",
+                  "year": "2010"
                   }
-            }
-
+             }
 
 ### Servicio de viaje
 

@@ -8,6 +8,8 @@ install:
 before_script:
   - export MONGO_URI=127.0.0.1
   - export PYTHONPATH=$PYTHONPATH:$(pwd)/src/llevame
+  # Esta no se usa, pero se necesita igual.
+  - export SHARED_SERVER_ADDR=http://shared-server:4000
 script:
   - pytest --cov .
 after_success:

@@ -12,7 +12,7 @@ this.sessions = {}
 
 
 def addSession(userID,sessionToken):
-    logging.info('Guardando un session',extra=log_info)
+    logging.info('Guardando una session',extra=log_info)
     session_list = []
     if userID in sessions.keys():
         session_list = sessions[userID]
