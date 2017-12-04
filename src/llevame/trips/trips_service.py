@@ -5,6 +5,7 @@ from my_firebase import firebase_service as firebaseService
 from user import user_service as userService
 from trips import tripCostService
 from session import session_service as sessionService
+from drivers import drivers_service as driverService
 #Configuración del loggin
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -21,6 +22,7 @@ def addTrip(passengerID,driverID,fromPos,toPos):
     this.withUser[driverID] = passengerID
     this.withUser[passengerID] = driverID
     nameAndLasName = getNameAndLastNameFromUID(driverID)
+    driverService.delete_driver(driverID)
     data = {
         '_passengerID':passengerID,
         '_from':fromPos,
