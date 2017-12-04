@@ -2,9 +2,11 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import auth
 from firebase_admin import db
+
 import logging
 from math import radians, cos, sin, asin, sqrt
 from utils import positionTransformer
+import os
 
 
 #Configuracion del login
@@ -13,12 +15,14 @@ logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'firebaseService'}
 
 
+
 #Configuracion de firebase
 logging.info('Obteniendo credenciales',extra=log_info)
-cred = credentials.Certificate('/as/src/llevame/my_firebase/serviceAccountKey.json')
+filename = os.path.join(os.path.dirname(__file__), 'serviceAccountKey.json')
+cred = credentials.Certificate(filename)
 logging.info('Levantanto la app de firebase',extra=log_info)
 default_app = firebase_admin.initialize_app(cred, {
-'databaseURL': 'https://t2t2-9753f.firebaseio.com'
+    'databaseURL': 'https://t2t2-9753f.firebaseio.com'
 })
 
 
@@ -28,12 +32,12 @@ def validate_token(id_token):
         decoded_token = auth.verify_id_token(id_token)
         uid = decoded_token['uid']
         logging.info('decoded_token'+uid,extra=log_info)
-        user = auth.get_user(uid)
-        logging.info('el user es:'+str(user.email)+"",extra=log_info)
-    except ValueError:
-        loggin.info('Hubo un error al tratar de iniciar la sesión',extra=log_info)
+        email = getEmailFromUid(uid)
+        logging.info('el user es:'+email+"",extra=log_info)
+    except:
+        logging.info('Hubo un error al tratar de iniciar la sesión',extra=log_info)
         return None
-    return str(user.email)
+    return email
 
 
 def getUID(token):
@@ -76,9 +80,18 @@ def getDriversArounPosition(passengerPosition,driversListID):
     logging.info('Se esta calculando las posiciones cercanas al pasajero',extra=log_info)
     for driverID in driversListID:
         ref = db.reference(driverID)
+        # TODO es necesario o siquiera razonable hacer dos res.get? no es mejor guardarlo?
         driverPositionString = str(ref.get())
         logging.info('Se obtuvo la siguiente respuesta de firebase:'+driverPositionString,extra=log_info)
         driverPosition = positionTransformer.parserStringToPosition(str(ref.get()))
         if calculateDistance(passengerPosition,driverPosition) <= 100 :
-            nearbyDriverIDsList.append(driverID)
+            nearbyDriverIDsList.append({'id':driverID,'pos':driverPosition})
     return nearbyDriverIDsList
+
+
+
+def getEmailFromUid(uid):
+        logging.info('Se esta pidiendo obtener el email del UID: '+uid,extra=log_info)
+        user = auth.get_user(uid)
+        logging.info('el user es:'+str(user.email)+"",extra=log_info)
+        return str(user.email)

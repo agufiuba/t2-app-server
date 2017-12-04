@@ -1,1 +1,1 @@
-web: gunicorn src.app:app
+web: gunicorn --chdir src --pythonpath $(pwd)/src/llevame llevame.app:app

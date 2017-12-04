@@ -94,19 +94,81 @@ Los puntos suspensivos serian los datos que se quieren actualizar
 + URL: http://uri:port/user/{id_user}
 
 
++ Respuesta si es un pasajero
+
+            {
+                type: 'passenger'
+                name: 'name',
+                last_name: 'apellido',
+                email: 'email',
+            }
+### Obtener información del auto de un usuario
+
++ URL: http://uri:port/user/driver/<uid>
++ verbo REST: GET
+      
++ Respuesta:
+
+            {
+             "car": {
+                  "air_conditioner": "Sí",
+                  "color": "Azul",
+                  "model": "Toyota Hilux",
+                  "music": "Clasica",
+                  "patent": "12345678",
+                  "state": "Excelente",
+                  "year": "2010"
+                  }
+             }
 
 ### Servicio de viaje
 
-Este tiene 2 responsabilidades:
+Agregar un viaje que se va a realizar
 
-+ Cotizar los viajes
-+ Informar los viajes disponibles
++ URL: /trips
++ Verbo REST: POST
++ Header:
+
+      {'Authorization':'xxxx'}
+
++ Body:
+
+      {
+      'driverID':'xxxx',
+      'from':'xxxx',
+      'to':'xxxxx'
+      }
 
 
 ### Servicio de choferes
 
-Se encarga de informar los choferes disponibles.
+Obtener los choferes disponibles.
 
++ Verbo REST: GET
++ Header:
+
+       {'Authorization':'xxxx'}
+
++ URL: /drivers?pos=lat/lng: (-34.6220855,-58.3832781)
++ Response: La lista de los id de los drivers cercanos al pasajero
+
+          {
+          'drivers':[id1,id2,id3]
+          }
+
+
+
+Agregar un chofer disponible
+
++ URL: /drivers
++ Verbo REST: POST
++ Header:
+
+       {'Authorization':'xxxx'}
+
+ + Response:
+
+       {'message': 'Se agrego de manera correcta al chofer de xxxx'}
 
 ### Servicio de posicionamiento
 
@@ -119,7 +181,7 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
 
 + Verbo REST: PUT
 + Body:
-      
+
       {
       'Authorization':'xxxxxxx',
       'Content-Type':'application/json'
@@ -203,7 +265,7 @@ Response:
           parameters : [......]
         }
 
-## Uri's dispobibles
+## Uri's disponibles
 
 
 + /user
