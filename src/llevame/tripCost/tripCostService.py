@@ -29,7 +29,7 @@ def getCostAndDistance(userEmail,fromString,toString):
         logging.info('El string de distancia es el siguiente:'+dictWithSomeParameters['distance'],extra=log_info)
         logging.info('Saco el km del string:'+dictWithSomeParameters['distance'].split('k')[0],extra=log_info)
         cost = sharedService.getCostFromDistanceInKM(userEmail,dictWithSomeParameters['distance'].split('k')[0])
-        dictWithSomeParameters['cost'] = cost['costos']
+        dictWithSomeParameters['cost'] = cost['costo']
         return dictWithSomeParameters
     else:
         logging.info('No se pudo obtener los parametros distancia,tiempo',extra=log_info)
