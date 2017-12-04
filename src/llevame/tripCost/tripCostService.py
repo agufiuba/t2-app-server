@@ -26,6 +26,8 @@ def getCostAndDistance(userEmail,fromString,toString):
     dictWithSomeParameters = getGoogleResponse(fromString,toString)
     if dictWithSomeParameters != None:
         addResponseInCache(fromString,toString,dictWithSomeParameters)
+        logging.info('El string de distancia es el siguiente:'+dictWithSomeParameters['distance'],extra=log_info)
+        logging.info('Saco el km del string:'+dictWithSomeParameters['distance'].split('k')[0],extra=log_info)
         cost = sharedService.getCostFromDistanceInKM(userEmail,dictWithSomeParameters['distance'].split('k')[0])
         dictWithSomeParameters['cost'] = cost
         return dictWithSomeParameters
