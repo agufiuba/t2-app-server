@@ -41,3 +41,16 @@ def add_trip():
             return jsonify({'message':'El usuario no existe en nuestra db'}),400
     else:
         return jsonify({'message':'Hubo un error con el token'}),400
+
+
+@tripsController.route('/trips/driverTraveling',methods = ['PUT'])
+    def driverInWay():
+    logging.info('Llego un request PUT /trips/driverTraveling',extra=log_info)
+    token = request.headers['Authorization']
+    email = firebaseService.validate_token(passengerToken)
+    if email != None:
+        driverID = firebaseService.getUID(token)
+        tripsService.driverInWay(driverID)
+        return jsonify({'message':'Se actualizo el estado del vieje'}),200
+    else:
+        return jsonify({'message':'Hubo un error al tratar de validar el token'}),400

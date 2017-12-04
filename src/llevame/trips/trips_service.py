@@ -4,7 +4,7 @@ from notification import notification_service as notificationService
 from my_firebase import firebase_service as firebaseService
 from user import user_service as userService
 from trips import tripCostService
-
+from session import session_service as sessionService
 #Configuración del loggin
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -13,19 +13,21 @@ log_info = {'clientip': '192.168.0.1', 'service': 'tripsService'}
 
 this = sys.modules[__name__]
 this.trips = {}
-
+this.withUser = {}
 
 def addTrip(passengerID,driverID,fromPos,toPos):
     logging.info('Se esta agregando un nuevo viaje',extra=log_info)
-    this.trips[passengerID] = driverID
+    this.trips[(passengerID,driverID)] = 'WAIT_DRIVER_CONFIRMATION'
+    this.withUser[driverID] = passengerID
+    this.withUser[passengerID] = driverID
     nameAndLasName = getNameAndLastNameFromUID(driverID)
     data = {
-    '_passengerID':passengerID,
-    '_from':fromPos,
-    '_to':toPos,
-    '_passengerName':nameAndLasName['name'],
-    '_passengerLastName':nameAndLasName['last_name'],
-    '_polyline':tripCostService.getGoogleResponse(getLatAndLngFromString(fromPos),getCostAndDistance(toPos))['points']
+        '_passengerID':passengerID,
+        '_from':fromPos,
+        '_to':toPos,
+        '_passengerName':nameAndLasName['name'],
+        '_passengerLastName':nameAndLasName['last_name'],
+        '_polyline':tripCostService.getGoogleResponse(getLatAndLngFromString(fromPos),getCostAndDistance(toPos))['points']
     }
     notificationService.notificate_user(driverID,data)
     return True
@@ -36,6 +38,15 @@ def addTrip(passengerID,driverID,fromPos,toPos):
 def getLatAndLngFromString(aString):
     return aString.split(')')[0].split('(')[1]
 
+
+
+def driverInWay(driverID):
+    passengerID = this.withUser[driverID]
+    data_for_passenger = {'sessionIDs':sessionService.getSessionsList(driverID)}
+    notificationService.notificate_user(passengerID,data_for_passenger)
+    data_for_driver = {'sessionIDs':sessionService.getSessionsList(passengerID)}
+    notificationService.notificate_user(driverID,data_for_driver)
+    this.trips[(passengerID,driverID)] = 'DRIVER IN WAY'
 
 
 def getNameAndLastNameFromUID(UID):
