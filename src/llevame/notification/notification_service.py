@@ -28,13 +28,5 @@ def notificate(sessionID,data):
 	 }
     }
 
-    date_to_notification = {
-        'to':sessionID,
-    	'notification' : {
-            'title': 'Nuevo Viaje',
-            'body': 'Un usuario a elegido viajar con vos',
-         }
-    }
     requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=data_to_active_listener)
-    requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=date_to_notification)
     return True
