@@ -34,7 +34,7 @@ def validate_token(id_token):
         logging.info('decoded_token'+uid,extra=log_info)
         email = getEmailFromUid(uid)
         logging.info('el user es:'+email+"",extra=log_info)
-    except ValueError:
+    except:
         logging.info('Hubo un error al tratar de iniciar la sesión',extra=log_info)
         return None
     return email

@@ -39,6 +39,7 @@ def build_drivers_controller(interfaces):
         email = firebaseService.validate_token(token)
         ID = firebaseService.getUID(token)
         driverService.login_driver(ID)
+        logging.info('Se devuelvo un 200, se agrego al usuario de manera correcta',extra=log_info)
         return jsonify({'message':'Se agrego de manera correcta al chofer de email'+email}),200
 
 
