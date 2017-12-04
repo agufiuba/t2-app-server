@@ -106,7 +106,7 @@ Los puntos suspensivos serian los datos que se quieren actualizar
 
 + URL: http://uri:port/user/driver/<uid>
 + verbo REST: GET
-      
+
 + Respuesta:
 
             {
@@ -139,6 +139,26 @@ Agregar un viaje que se va a realizar
       'to':'xxxxx'
       }
 
+
+Avisar que el chofer esta viajando
+
++ URL: /trips/driverTraveling
++ Verbo REST: PUT
++ Header :
+
+          {'Authorization':'xxxx'}
+
++ Response:
+
+          {'message':'Se actualizo el estado del vieje'}
+
+
+Cuando se realiza el request, se manda notificacion tanto al chofer como el pasajero, y en data se le manda el sessionList
+
+
+La notificacion tiene como data el siguiente formato:
+
+          {'sessionIDs':[1,2,3,4,5]}
 
 ### Servicio de choferes
 
