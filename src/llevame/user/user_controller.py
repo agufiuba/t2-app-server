@@ -15,7 +15,7 @@ def build_user_controller(interfaces):
     @user_controller.route('/user',methods=['POST'])
     def add_user():
         logging.info('Se recibio un Request POST',extra=log_info)
-        response = user_validator.validateAddUserRequest(request)
+        response = user_validator.validateAddUserRequest(request.get_json())
         if response != 'ok':
             return jsonify({'message':response}),400
         if userService.addUser(request.get_json()):
