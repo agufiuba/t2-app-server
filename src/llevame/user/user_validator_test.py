@@ -92,12 +92,12 @@ class TestUserRequestValidor(unittest.TestCase):
 
     def the_validation_from_update_req_should_be_false_because_data_dont_have_id(self):
         data = {}
-        self.assertFalse(userValidator.validateAddUserRequest(data) == 'ok')
+        self.assertFalse(userValidator.validate_update_user_request(data) == 'ok')
 
 
     def the_validation_from_update_req_should_be_true_because_data_is_complete(self):
         data = {'id':'xxx'}
-        self.assertTrue(userValidator.validateAddUserRequest(data) == 'ok')
+        self.assertTrue(userValidator.validate_update_user_request(data) == 'ok')
 
 if __name__ == '__main__':
     unittest.main()
