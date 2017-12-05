@@ -13,4 +13,4 @@ class TestSessionService(unittest.TestCase):
 
     def test_the_session_list_should_be_acumulable(self):
         sessionService.addSession('id','otherSessionToken')
-        self.assertTrue(sessionService.getSessionsList('id') == ['aSessionToken','aSessionToken'])
+        self.assertTrue(sessionService.getSessionsList('id') == ['aSessionToken','otherSessionToken'])
