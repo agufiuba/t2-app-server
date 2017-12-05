@@ -23,4 +23,6 @@ def addSession(userID,sessionToken):
 
 
 def getSessionsList(userID):
+    if userID in not sessions.keys():
+        return []
     return sessions[userID]
