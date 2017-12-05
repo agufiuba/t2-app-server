@@ -1,5 +1,5 @@
 import unittest
-from . import user_validator as userValidator
+from user import user_validator as userValidator
 
 
 class TestUserRequestValidor(unittest.TestCase):
