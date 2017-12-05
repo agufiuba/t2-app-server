@@ -24,7 +24,7 @@ def build_user_controller(interfaces):
 
     @user_controller.route('/user', methods=['PUT'])
     def update_user():
-        response = user_validator.validate_update_user_request(request)
+        response = user_validator.validate_update_user_request(request.get_json())
         if response != 'ok':
             return response,400
         logging.info('Se recibio un Request PUT', extra=log_info)

@@ -48,7 +48,6 @@ def validateField(fieldName,fieldsToValidate,data):
 
 def validate_update_user_request(data):
     logging.info('Validando un request para actualizar informacion de un user',extra=log_info)
-    data = request.get_json()
     if 'id' not in data:
         logging.info('Falta el campo id dentro del request para actualizar usuario, devolviendo 400',extra=log_info)
     return 'ok'
