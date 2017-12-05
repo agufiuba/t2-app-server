@@ -2,7 +2,7 @@ import unittest
 from user import user_validator as userValidator
 
 
-class TestUserRequestValidor(unittest.TestCase):
+class TestUserRequestValidator(unittest.TestCase):
     def the_validation_should_be_false_because_data_dont_have_type(self):
         data = {'name':'xx','last_name':'xx','mail':'xx'}
         self.assertFalse(userValidator.validateAddUserRequest(data) == 'ok')
@@ -87,7 +87,6 @@ class TestUserRequestValidor(unittest.TestCase):
     def the_validation_should_be_true_because_data_type_passenger_is_complet(self):
         data = {'type':'driver','name':'xx','last_name':'xx','mail':'xx','card':{'number':'xx','typeCard':'xx','securityCode':'xx','expirationYear':'xx','expirationMonth':'xx'}}
         self.assertFalse(userValidator.validateAddUserRequest(data) == 'ok')
-
 
 
     def the_validation_from_update_req_should_be_false_because_data_dont_have_id(self):
