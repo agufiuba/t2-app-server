@@ -1,6 +1,6 @@
 import unittest
 
-from shared_service import dataTransformerQueryParams as transformer
+from shared_service import dataTransformatorQueryParams as transformer
 
 class TestDataTransformer(unittest.TestCase):
     def test_the_result_should_be_two_when_type_is_driver(self):
