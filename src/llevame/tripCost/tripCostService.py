@@ -3,13 +3,7 @@ import json
 from shared_service import shared_server_service as sharedService
 import logging
 import sys
-
-#ApiKey para pegarle a la API de google
-apiKey = "AIzaSyDh9EMTub3aewSOKjv_oyrRs8sOZjUQwek";
-#Url service
-url = "https://maps.googleapis.com/maps/api/directions/json?"
-
-
+from tripCost import googleMapService
 
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -17,52 +11,21 @@ logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'tripCostService'}
 
 
-this = sys.modules[__name__]
-this.cacheGooleResponses = {}
+class tripCostService():
+    def __init__(self,googleMapService,sharedService):
+        self.googleMapService = googleMapService
+        self.sharedService = sharedService
 
-
-
-def getCostAndDistance(userEmail,fromString,toString):
-    dictWithSomeParameters = getGoogleResponse(fromString,toString)
-    if dictWithSomeParameters != None:
-        addResponseInCache(fromString,toString,dictWithSomeParameters)
-        logging.info('El string de distancia es el siguiente:'+dictWithSomeParameters['distance'],extra=log_info)
-        logging.info('Saco el km del string:'+dictWithSomeParameters['distance'].split('k')[0],extra=log_info)
-        cost = sharedService.getCostFromDistanceInKM(userEmail,dictWithSomeParameters['distance'].split('k')[0])
-        dictWithSomeParameters['cost'] = cost['costo']
-        return dictWithSomeParameters
-    else:
-        logging.info('No se pudo obtener los parametros distancia,tiempo',extra=log_info)
-        return None
-
-
-def getGoogleResponse(fromString,toString):
-    #Si ya se realizo la busqueda alguna vez, lo obtengo
-    logging.info('Obteniendo la respuesta de google',extra=log_info)
-    if ifItIsInResultsCache(fromString,toString):
-        dictWithSomeParameters = cacheResults[(fromString,toString)]
-    else:
-        dictWithSomeParameters = getDistanceInKm(fromString,toString)
-    return dictWithSomeParameters
-
-
-def addResponseInCache(fromString,toString,data):
-    cacheGooleResponses[(fromString,toString)] = data
-
-
-def ifItIsInResultsCache(fromString,toString):
-    return (fromString,toString) in cacheGooleResponses
-
-
-def getDistanceInKm(fromString,toString):
-    logging.info('Obteniendo distancia desde '+fromString+'hasta'+toString,extra=log_info)
-    res = requests.get(url+'origin='+fromString+'&destination='+toString+'&key='+apiKey+"&alternatives=true")
-    resJSON = json.loads(res.text)
-    try:
-        timeInMinutes = resJSON['routes'][0]['legs'][0]['duration']['text']
-        distanceInMeters = resJSON['routes'][0]['legs'][0]['distance']['text']
-        points = resJSON['routes'][0]['overview_polyline']['points']
-    except:
-        logging.info('No se pudo obtener una respuesta ok del app google',extra=log_info)
-        return None
-    return {'distance':distanceInMeters,'time':timeInMinutes,'points':points}
+    def getCostDistanceTimeAndCost(self,email,fromString,toString):
+        response = self.googleMapService(fromString,toString)
+        if googleResponse != None:
+            logging.info('El string de distancia es el siguiente:'+googleResponse['distance'],extra=log_info)
+            #Obtengo costo
+            cost = self.sharedService.getCostFromDistanceInKM(email,googleResponse['distance'].split('k')[0])['costo']
+            response['cost'] = cost
+            logging.info('Devolviendo el tiempo,costo,distancia y puntos',extra=log_info)
+            return response
+        else:
+            logging.info('No se pudo obtener los parametros distancia,tiempo',extra=log_info)
+            return None
+    
