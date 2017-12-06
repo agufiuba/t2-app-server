@@ -1,7 +1,8 @@
 from flask import Blueprint,request,jsonify
 import logging
 from . import user_validator
-from .user_service import UserService
+from user.user_service import UserService
+from my_firebase.firebase_service import FirebaseService
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -9,8 +10,8 @@ log_info = {'clientip': '192.168.0.1', 'service': 'userController'}
 
 def build_user_controller(interfaces):
     user_controller = Blueprint('user_controller',__name__)
-    firebaseService = interfaces.get_firebase_service()
-    userService = UserService(interfaces)
+    firebaseService = FirebaseService()
+    userService = UserService()
 
     @user_controller.route('/user',methods=['POST'])
     def add_user():

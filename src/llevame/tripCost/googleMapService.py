@@ -2,11 +2,11 @@ import requests
 import json
 
 
-class googleMapService:
+class GoogleMapService:
     def __init__(self):
         self.urlService = "https://maps.googleapis.com/maps/api/directions/json?"
         self.apiKey = "AIzaSyDh9EMTub3aewSOKjv_oyrRs8sOZjUQwek"
-        this.cache = {}
+        self.cache = {}
 
     def getDistanceTimeAndPoints(self,fromString,toString):
         logging.info('Obteniendo distancia desde '+fromString+'hasta'+toString,extra=log_info)
@@ -21,7 +21,7 @@ class googleMapService:
             return None
 
 
-    def parseResponse(response):
+    def _parseResponse(response):
         try:
             timeInMinutes = response['routes'][0]['legs'][0]['duration']['text']
             distanceInMeters = response['routes'][0]['legs'][0]['distance']['text']

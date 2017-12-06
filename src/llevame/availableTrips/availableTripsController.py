@@ -3,6 +3,7 @@ from .availableTripsService import AvailableTripService
 from . import availableTripsRequestValidator
 import logging
 
+
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'travelsController'}

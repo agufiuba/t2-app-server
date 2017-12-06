@@ -10,7 +10,7 @@ from payment.paymentController import build_payment_controller
 
 from interfaces import Interfaces
 
-from shared_service import shared_server_service as SharedService
+from shared_service.shared_server_service import SharedServerService
 from my_firebase import firebase_service
 
 import os
@@ -27,7 +27,7 @@ def build_app(interfaces = None):
             firebase_service = firebase_service, \
             mongo_uri = os.environ['MONGO_URI'], \
             mongo_db_name = "t2", \
-            shared_server_service = SharedService)
+            shared_server_service = SharedServerService())
 
     app = Flask(__name__)
 
@@ -38,7 +38,7 @@ def build_app(interfaces = None):
         return 'UP',200
 
     logging.info('Iniciando aplicación',extra=log_info)
-    interfaces.get_shared_server_service().getToken()
+    SharedServerService().getToken()
 
     app.register_blueprint(build_user_controller(interfaces))
     app.register_blueprint(build_available_trips_controller(interfaces))
