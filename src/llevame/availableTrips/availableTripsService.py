@@ -1,8 +1,10 @@
-from tripCost import tripCostService
+from tripCost.tripCostService import TripCostService
 from pymongo import MongoClient
 from bson.json_util import dumps
 import logging
 import sys
+
+
 
 # Configuración de Log
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -16,7 +18,7 @@ class AvailableTripService:
         logging.info('URL de DB: ' + str(interfaces.get_mongo_uri()),extra=log_info)
         self.db = MongoClient(interfaces.get_mongo_uri())[interfaces.get_mongo_db_name()]
         self.sharedService = interfaces.get_shared_server_service()
-
+        self.tripCostService = TripCostService()
     # fromPlace porque from es reservado de python
     def addTravel(self, email, data):
         user = self.sharedService.getUserFromEmail(email)
