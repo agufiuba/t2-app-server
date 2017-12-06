@@ -10,8 +10,6 @@ def build_position_controller(interfaces):
     def addPositionInTime():
         token = request.headers['Authorization']
         email = firebaseService.validate_token(token)
-        validation = positionRequestValidator.validate(request)
-
+        validation = positionRequestValidator.validate(request.get_json())
         return 'Welcome to positioning service'
-
     return position_controller
