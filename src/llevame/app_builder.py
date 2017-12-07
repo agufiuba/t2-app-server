@@ -45,6 +45,6 @@ def build_app(interfaces = None):
     app.register_blueprint(build_position_controller())
     app.register_blueprint(build_login_controller(interfaces))
     app.register_blueprint(main_controller)
-    app.register_blueprint(build_parameters_controller(interfaces))
+    app.register_blueprint(build_parameters_controller())
     app.register_blueprint(build_payment_controller())
     return app
