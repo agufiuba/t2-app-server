@@ -40,35 +40,35 @@ userService = UserService(sharedServerService)
 
 
 class TestUserService(unittest.TestCase):
-    def the_add_user_should_return_true_when_the_data_have_correct_format(self):
+    def test_the_add_user_should_return_true_when_the_data_have_correct_format(self):
         assertTrue(userService.addUser(driver))
 
-    def the_add_user_should_return_false_when_the_data_have_incorrect_format_driver(self):
+    def test_the_add_user_should_return_false_when_the_data_have_incorrect_format_driver(self):
         assertFalse(userService.addUser(driverIncomplet))
 
-    def the_add_user_should_return_true_when_the_data_have_correct_format_passenger(self):
+    def test_the_add_user_should_return_true_when_the_data_have_correct_format_passenger(self):
         assertTrue(userService.add(passenger))
 
-    def the_add_user_should_return_false_when_the_data_have_incorrect_format_passenger(self):
+    def test_the_add_user_should_return_false_when_the_data_have_incorrect_format_passenger(self):
         assertTrue(userService.add(passengerIncomplete))
 
 
-    def the_convertType_shoud_return_passenger(self):
+    def test_the_convertType_shoud_return_passenger(self):
         assertTrue(userService.convertType(1) == 'passenger')
 
-    def the_convertType_shoud_return_driver(self):
+    def test_the_convertType_shoud_return_driver(self):
         assertTrue(userService.convertType(2) == 'driver')
 
 
-    def getUser_should_filter_from_shared_response(self):
+    def test_getUser_should_filter_from_shared_response(self):
         copy = dict(driver)
         excepted = copy.pop('car')
         assertTrue(userService.getUser('cristian3629@gmail.com') == excepted)
 
-    def getUser_should_filter_from_shared_response_again(self):
+    def test_getUser_should_filter_from_shared_response_again(self):
         copy = dict(passenger)
         excepted = copy.pop('card')
         assertTrue(userService.getUser('cristian3629xx@gmail.com') == excepted)
 
-    def getUser_should_return_None_when_shared_returns_None(self):
+    def test_getUser_should_return_None_when_shared_returns_None(self):
         assertTrue(userService.get('userNotExits@gmail.com') == None)
