@@ -34,7 +34,7 @@ def addTrip(passengerID,driverID,fromPos,toPos):
         '_to':toPos,
         '_passengerName':nameAndLasName['name'],
         '_passengerLastName':nameAndLasName['last_name'],
-        '_polyline':tripCostService.getGoogleResponse(getLatAndLngFromString(fromPos),getCostAndDistance(toPos))['points']
+        '_polyline':tripCostService.getCostDistanceTimeAndCost(getLatAndLngFromString(fromPos),getCostAndDistance(toPos))['points']
     }
     notificationService.notificate_user(driverID,data)
     return True
