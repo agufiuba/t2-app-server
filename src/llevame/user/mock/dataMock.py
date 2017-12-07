@@ -19,7 +19,7 @@ driverIncomplet = {
 	"type":"driver",
 	"name":"cristian",
 	"last_name":"gonzalez",
-	"mail":"cristian3629@gmail.com",
+	"mail":"cristian3629x@gmail.com",
 	"car":{
 		"model":"xxx",
 		"color":"xxx",
@@ -34,8 +34,8 @@ passenger = {
 	"type":"driver",
 	"name":"cristian",
 	"last_name":"gonzalez",
-	"mail":"cristian3629@gmail.com",
-	"car":{
+	"mail":"cristian3629xx@gmail.com",
+	"card":{
 		"number":"xxx",
 		"typeCard":"xxx",
 		"securityCode":"xxx",
@@ -50,8 +50,8 @@ passengerIncomplete = {
 	"type":"driver",
 	"name":"cristian",
 	"last_name":"gonzalez",
-	"mail":"cristian3629@gmail.com",
-	"car":{
+	"mail":"cristian3629xxx@gmail.com",
+	"card":{
 		"number":"xxx",
 		"typeCard":"xxx",
 		"securityCode":"xxx",
