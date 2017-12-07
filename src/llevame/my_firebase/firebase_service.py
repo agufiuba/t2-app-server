@@ -29,7 +29,7 @@ class FirebaseService:
         })
         self.cacheUIDEmail = {}
         self.cacheEmailUID = {}
-        
+
     def validate_token(self,id_token):
         logging.info('Validando token',extra=log_info)
         try:
@@ -75,20 +75,21 @@ class FirebaseService:
     def calculateDistance(self,position,otherPosition):
         logging.info('position:'+str(position),extra=log_info)
         logging.info('position:'+str(otherPosition),extra=log_info)
-        return haversine(position['lng'],position['lat'],otherPosition['lng'],otherPosition['lat'])
+        return self.haversine(position['lng'],position['lat'],otherPosition['lng'],otherPosition['lat'])
 
 
     def getDriversArounPosition(self,passengerPosition,driversListID):
         nearbyDriverIDsList = []
         logging.info('Se esta calculando las posiciones cercanas al pasajero',extra=log_info)
         for driverID in driversListID:
-            ref = db.reference(driverID)
+            ref = db.reference('localizations/'+driverID)
             # TODO es necesario o siquiera razonable hacer dos res.get? no es mejor guardarlo?
             driverPositionString = str(ref.get())
             logging.info('Se obtuvo la siguiente respuesta de firebase:'+driverPositionString,extra=log_info)
             driverPosition = positionTransformer.parserStringToPosition(str(ref.get()))
-            if calculateDistance(passengerPosition,driverPosition) <= 100 :
+            if self.calculateDistance(passengerPosition,driverPosition) <= 100 :
                 nearbyDriverIDsList.append({'id':driverID,'pos':driverPosition})
+        logging.info('Devolviendo los choferes cercanos:'+str(nearbyDriverIDsList),extra=log_info)
         return nearbyDriverIDsList
 
 
