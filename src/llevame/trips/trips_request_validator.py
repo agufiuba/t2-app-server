@@ -6,8 +6,6 @@ logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'tripsRequestValidator'}
 
 
-
-
 def validate(request):
     logging.info('Validando request',extra=log_info)
     json = request.get_json()

@@ -53,7 +53,7 @@ class FirebaseService:
         return uid
 
     def getPositionFromId(self, driverID):
-        ref = db.reference()
+        ref = db.reference('localizations/'+driverID)
         driverPositionString = str(ref.get())
         logging.info('Se obtuvo la siguiente string de posición de firebase: ' + driverPositionString, extra=log_info)
         return Position(driverPositionString)
