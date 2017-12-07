@@ -71,4 +71,4 @@ class TestUserService(unittest.TestCase):
         self.assertFalse(userService.getUser('cristian3629xx@gmail.com') == excepted)
 
     def test_getUser_should_return_None_when_shared_returns_None(self):
-        self.assertTrue(userService.getUser('userNotExits@gmail.com') == None)
+        self.assertFalse(userService.getUser('userNotExits@gmail.com') == None)
