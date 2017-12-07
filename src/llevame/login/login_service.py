@@ -2,6 +2,9 @@ from shared_service import shared_server_service as sharedService
 from session import session_service as sessionService
 import logging
 
+from my_firebase.firebase_service import FirebaseService
+from shared_service.shared_server_service import SharedServerService
+
 #Configurando el loggin
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -9,9 +12,9 @@ log_info = {'clientip': '192.168.0.1', 'service': 'loginService'}
 
 class LoginService:
 
-    def __init__(self, interfaces):
-        self.firebaseService = interfaces.get_firebase_service()
-        self.sharedService = interfaces.get_shared_server_service()
+    def __init__(self, firebaseService = FirebaseService(), sharedService = SharedServerService()):
+        self.firebaseService = firebaseService
+        self.sharedService = sharedService
 
     def login(self, request):
         logging.info('LLegó el pedido para loguear a un user',extra=log_info)

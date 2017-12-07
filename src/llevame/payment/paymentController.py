@@ -1,15 +1,17 @@
 from flask import Blueprint,request,jsonify
 import logging
 from . import paymentService
+from my_firebase.firebase_service import FirebaseService
+from shared_service.shared_server_service import SharedServerService
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'paymentController'}
 
-def build_payment_controller(interfaces):
+def build_payment_controller():
     payment_controller = Blueprint('paymentController',__name__)
-    shared_service = interfaces.get_shared_server_service()
-    firebaseService = interfaces.get_firebase_service()
+    shared_service = SharedServerService()
+    firebaseService = FirebaseService()
 
     @payment_controller.route('/payment/methods',methods=['GET'])
     def getPaymentMethods():

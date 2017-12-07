@@ -1,9 +1,10 @@
 from flask import Blueprint,request
 from . import positionRequestValidator
+from my_firebase.firebase_service import FirebaseService
 
-def build_position_controller(interfaces):
+def build_position_controller():
     position_controller = Blueprint('position_controller',__name__)
-    firebaseService = interfaces.get_firebase_service()
+    firebaseService = FirebaseService()
     positions_from_user = {}
 
     @position_controller.route('/position')

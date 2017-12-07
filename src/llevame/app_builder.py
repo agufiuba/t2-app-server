@@ -11,7 +11,7 @@ from payment.paymentController import build_payment_controller
 from interfaces import Interfaces
 
 from shared_service.shared_server_service import SharedServerService
-from my_firebase import firebase_service
+from my_firebase.firebase_service import FirebaseService
 
 import os
 import logging
@@ -24,7 +24,6 @@ log_info = {'clientip': '192.168.0.1', 'service': 'main'}
 def build_app(interfaces = None):
     if (interfaces == None):
         interfaces = Interfaces(\
-            firebase_service = firebase_service, \
             mongo_uri = os.environ['MONGO_URI'], \
             mongo_db_name = "t2", \
             shared_server_service = SharedServerService())
@@ -39,13 +38,13 @@ def build_app(interfaces = None):
 
     logging.info('Iniciando aplicación',extra=log_info)
     SharedServerService().getToken()
-
+    FirebaseService().initService()
     app.register_blueprint(build_user_controller(interfaces))
     app.register_blueprint(build_available_trips_controller(interfaces))
     app.register_blueprint(build_drivers_controller(interfaces))
-    app.register_blueprint(build_position_controller(interfaces))
+    app.register_blueprint(build_position_controller())
     app.register_blueprint(build_login_controller(interfaces))
     app.register_blueprint(main_controller)
     app.register_blueprint(build_parameters_controller(interfaces))
-    app.register_blueprint(build_payment_controller(interfaces))
+    app.register_blueprint(build_payment_controller())
     return app
