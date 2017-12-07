@@ -14,11 +14,25 @@ def addUserMock(data):
     elif data == passengerIncomplete:
         return False
 
+def getUserFromEmailMock(email):
+    if email == 'cristian3629@gmail.com':
+        copy = dict(driver)
+        copy.pop('car')
+        copy['id'] = 'xx'
+        return copy
+
+    if email == 'cristian3629xx@gmail.com':
+        copy = dict(passenger)
+        copy.pop('card')
+        copy['id'] = 'xx'
+        return copy
+    return None
+
 sharedServerService = SharedServerService()
 firebaseService = FirebaseService()
 
 sharedServerService.addUser = MagicMock(side_efect=addUserMock)
-
+sharedServerService.getUserFromEmail =  MagicMock(side_efect = getUserFromEmailMock)
 
 userService = UserService(sharedServerService)
 
@@ -36,3 +50,24 @@ class TestUserService(unittest.TestCase):
 
     def the_add_user_should_return_false_when_the_data_have_incorrect_format_passenger(self):
         assertTrue(userService.add(passengerIncomplete))
+
+
+    def the_convertType_shoud_return_passenger(self):
+        assertTrue(userService.convertType(1) == 'passenger')
+
+    def the_convertType_shoud_return_driver(self):
+        assertTrue(userService.convertType(2) == 'driver')
+
+
+    def getUser_should_filter_from_shared_response(self):
+        copy = dict(driver)
+        excepted = copy.pop('car')
+        assertTrue(userService.getUser('cristian3629@gmail.com') == excepted)
+
+    def getUser_should_filter_from_shared_response_again(self):
+        copy = dict(passenger)
+        excepted = copy.pop('card')
+        assertTrue(userService.getUser('cristian3629xx@gmail.com') == excepted)
+
+    def getUser_should_return_None_when_shared_returns_None(self):
+        assertTrue(userService.get('userNotExits@gmail.com') == None)
