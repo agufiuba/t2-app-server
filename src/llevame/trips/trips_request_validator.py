@@ -18,5 +18,8 @@ def validate(request):
     if 'to' not in json:
         logging.info('No se encuentra el <to> ',extra=log_info)
         return 'El <to> no se encuentra, por favor verifique eso'
+    if 'paymentMethod' not in json:
+        logging.info('No se encuentra el <paymentMethod> ',extra=log_info)
+        return 'El <paymentMethod> no se encuentra, por favor verifique eso'
     logging.info('El request es valido',extra=log_info)
     return 'ok'
