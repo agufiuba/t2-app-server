@@ -7,11 +7,11 @@ from user.mock.dataMock import driver,driverIncomplet,passenger,passengerIncompl
 def addUserMock(data):
     if data == driver:
         return True
-    else if data == driverIncomplet:
+    elif data == driverIncomplet:
         return False
-    else if data == passenger:
+    elif data == passenger:
         return True
-    else if data == passengerIncomplete:
+    elif data == passengerIncomplete:
         return False
 
 sharedServerService = SharedServerService()
