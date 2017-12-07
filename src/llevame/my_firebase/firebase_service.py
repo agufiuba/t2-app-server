@@ -3,8 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import auth
 from firebase_admin import db
 import logging
-from math import radians, cos, sin, asin, sqrt
-from utils import positionTransformer
+from utils.position import Position
 import os
 
 
@@ -53,46 +52,11 @@ class FirebaseService:
         logging.info('Se obtuvo el UID del usuario:'+str(user.email)+"",extra=log_info)
         return uid
 
-    def haversine(self,lon1, lat1, lon2, lat2):
-        """
-        Calculate the great circle distance between two points
-        on the earth (specified in decimal degrees)
-        """
-        logging.info('Calculando distancia',extra=log_info)
-        # convert decimal degrees to radians
-        lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-        # haversine formula
-        dlon = lon2 - lon1
-        dlat = lat2 - lat1
-        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-        c = 2 * asin(sqrt(a))
-        # Radius of earth in kilometers is 6371
-        km = 6371* c
-        logging.info('La distancia es:'+str(km),extra=log_info)
-        return km
-
-
-    def calculateDistance(self,position,otherPosition):
-        logging.info('position:'+str(position),extra=log_info)
-        logging.info('position:'+str(otherPosition),extra=log_info)
-        return self.haversine(position['lng'],position['lat'],otherPosition['lng'],otherPosition['lat'])
-
-
-    def getDriversArounPosition(self,passengerPosition,driversListID):
-        nearbyDriverIDsList = []
-        logging.info('Se esta calculando las posiciones cercanas al pasajero',extra=log_info)
-        for driverID in driversListID:
-            ref = db.reference('localizations/'+driverID)
-            # TODO es necesario o siquiera razonable hacer dos res.get? no es mejor guardarlo?
-            driverPositionString = str(ref.get())
-            logging.info('Se obtuvo la siguiente respuesta de firebase:'+driverPositionString,extra=log_info)
-            driverPosition = positionTransformer.parserStringToPosition(str(ref.get()))
-            if self.calculateDistance(passengerPosition,driverPosition) <= 100 :
-                nearbyDriverIDsList.append({'id':driverID,'pos':driverPosition})
-        logging.info('Devolviendo los choferes cercanos:'+str(nearbyDriverIDsList),extra=log_info)
-        return nearbyDriverIDsList
-
-
+    def getPositionFromId(self, driverID):
+        ref = db.reference()
+        driverPositionString = str(ref.get())
+        logging.info('Se obtuvo la siguiente string de posición de firebase: ' + driverPositionString, extra=log_info)
+        return Position(driverPositionString)
 
     def getEmailFromUid(self,uid):
         logging.info('Se esta pidiendo obtener el email del UID: '+uid,extra=log_info)
