@@ -11,7 +11,7 @@ this = sys.modules[__name__]
 this.sessions = {}
 
 class SessionService:
-    def addSession(userID,sessionToken):
+    def addSession(self,userID,sessionToken):
         logging.info('Guardando una session',extra=log_info)
         session_list = []
         if userID in sessions.keys():
@@ -19,7 +19,7 @@ class SessionService:
         session_list.append(sessionToken)
         sessions[userID] = session_list
 
-        def getSessionsList(userID):
+        def getSessionsList(self,userID):
             if userID not in sessions.keys():
                 return []
             return sessions[userID]

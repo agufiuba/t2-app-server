@@ -2,8 +2,8 @@ from flask import Blueprint,request,jsonify
 import logging
 from my_firebase import firebase_service as firebaseService
 from . import trips_request_validator as validator
-from my_firebase import firebase_service as firebaseService
-from shared_service import shared_server_service as sharedService
+from my_firebase.firebase_service import FirebaseService
+from shared_service.shared_server_service import SharedServerService
 from . import trips_service as tripsService
 
 
@@ -13,6 +13,8 @@ log_info = {'clientip': '192.168.0.1', 'service': 'tripsController'}
 
 
 tripsController = Blueprint('tripsController',__name__)
+sharedService = SharedServerService()
+firebaseService = FirebaseService()
 
 
 @tripsController.route('/trips',methods=['POST'])
@@ -44,7 +46,7 @@ def add_trip():
 
 
 @tripsController.route('/trips/driverTraveling',methods = ['PUT'])
-    def driverInWay():
+def driverInWay():
     logging.info('Llego un request PUT /trips/driverTraveling',extra=log_info)
     token = request.headers['Authorization']
     email = firebaseService.validate_token(passengerToken)
