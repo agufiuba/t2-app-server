@@ -38,5 +38,5 @@ class Position:
         logging.info('position:'+ str(otherPosition), extra=log_info)
         return self.haversine(self.lng, self.lat, otherPosition.lng, otherPosition.lat)
 
-    def __str__(self):
-        return "Lat: " + str(self.lat) + "; Long: " + str(self.lng)
+    def to_string(self):
+        return str(self.lat) + ";" + str(self.lng)

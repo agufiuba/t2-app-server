@@ -19,7 +19,7 @@ class DriverService:
         for driverID in self.drivers:
             driverPosition = self.firebaseService.getPositionFromId(driverID)
             if driverPosition.distance(passengerPosition) <= 100:
-                nearbyDriverIDsList.append({'id':driverID, 'pos':driverPosition})
+                nearbyDriverIDsList.append({'id':driverID, 'pos':driverPosition.to_string()})
 
         logging.info('Devolviendo los choferes cercanos:'+ str(nearbyDriverIDsList), extra=log_info)
         return nearbyDriverIDsList
