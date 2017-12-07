@@ -1,5 +1,5 @@
 import unittest
-from session.session_service as SessionService
+from session.session_service import SessionService
 
 
 sessionService = SessionService()
