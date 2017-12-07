@@ -92,9 +92,10 @@ class SharedServerService:
         return json.loads(res.text)
 
     # POST al sharedServer/trips.
-    def addTrip(self, userEmail, driverEmail, distance):
+    def addTrip(self, userEmail, driverEmail, distance, paymethod):
         logging.info("Enviándole al shared-server un viaje para agregar.", extra=log_info)
-        url = self.shared_server_addr+'/trips/'+ userEmail + "/" + driverEmail + "/" + distance.split(" ")[0]
+        url = self.shared_server_addr+'/trips/'+ userEmail + "/" + driverEmail \
+            + "/" + distance.split(" ")[0] + "?" + "metodo=" + paymethod
         logging.info("POST a la siguiente url: "+ url, extra=log_info)
         res = requests.post(url,headers = {'Authorization': self.token})
         return res.status_code == 200 or res.status_code == 201

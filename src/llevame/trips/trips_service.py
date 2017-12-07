@@ -37,7 +37,7 @@ def addTrip(passengerID,driverID,fromPos,toPos, payMethod):
     driver_email = firebaseService.getEmailFromUid(driverID)
     viaje = tripCostService.getCostDistanceTimeAndCost(user_email, getLatAndLngFromString(fromPos),getLatAndLngFromString(toPos))
     distancia = viaje["distance"]
-    shared_service.addTrip(user_email, driver_email, distancia)
+    shared_service.addTrip(user_email, driver_email, distancia, payMethod)
 
     # Datos para notificarle al conductor que tiene un viaje.
     data = {
