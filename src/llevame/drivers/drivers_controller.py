@@ -3,6 +3,7 @@ from .drivers_service import DriverService
 import logging
 from . import drivers_request_validator as validator
 from utils import positionTransformer
+from my_firebase.firebase_service import FirebaseService
 
 # Configuracion del loggin
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -11,8 +12,8 @@ log_info = {'clientip': '192.168.0.1', 'service': 'driversController'}
 
 def build_drivers_controller(interfaces):
     drivers_controller = Blueprint('drivers_controller',__name__)
-    firebaseService = interfaces.get_firebase_service()
-    driverService = DriverService(interfaces)
+    firebaseService = FirebaseService()
+    driverService = DriverService()
 
     # Obtengo todos los choferes que esten cerca del pasajero que quiere viajar
     @drivers_controller.route('/drivers', methods=["GET"])

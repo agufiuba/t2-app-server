@@ -10,7 +10,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'login_controller'}
 def build_login_controller(interfaces):
 
     login_controller = Blueprint('login_controller',__name__)
-    loginService = LoginService(interfaces)
+    loginService = LoginService()
 
     @login_controller.route('/login',methods=['POST'])
     def login_user():

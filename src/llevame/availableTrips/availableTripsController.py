@@ -3,6 +3,8 @@ from .availableTripsService import AvailableTripService
 from . import availableTripsRequestValidator
 import logging
 
+from my_firebase.firebase_service import FirebaseService
+
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -12,7 +14,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'travelsController'}
 def build_available_trips_controller(interfaces):
 
     availableTripsController = Blueprint('availableTripsController',__name__)
-    firebaseService = interfaces.get_firebase_service()
+    firebaseService = FirebaseService()
     availableTripsService = AvailableTripService(interfaces)
 
     @availableTripsController.route('/availableTrip',methods=['POST'])
