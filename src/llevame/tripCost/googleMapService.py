@@ -1,6 +1,13 @@
 import requests
 import json
+import logging
 
+
+
+
+FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
+logging.basicConfig(format=FORMAT,level=logging.INFO)
+log_info = {'clientip': '192.168.0.1', 'service': 'googleMapService'}
 
 class GoogleMapService:
     def __init__(self):
@@ -10,18 +17,18 @@ class GoogleMapService:
 
     def getDistanceTimeAndPoints(self,fromString,toString):
         logging.info('Obteniendo distancia desde '+fromString+'hasta'+toString,extra=log_info)
-        if (fromString,toString) in cache.keys():
-            return cache[(fromString,toString)]
+        if (fromString,toString) in self.cache.keys():
+            return self.cache[(fromString,toString)]
         else:
-            response = json.loads(requests.get(url+'origin='+fromString+'&destination='+toString+'&key='+apiKey+"&alternatives=true"))
-            parsedResponse = parseResponse(response)
+            response = json.loads(requests.get(self.urlService+'origin='+fromString+'&destination='+toString+'&key='+self.apiKey+"&alternatives=true").text)
+            parsedResponse = self.parseResponse(response)
             if (parsedResponse != None):
-                cache[(fromString,toString)] = parsedResponse
+                self.cache[(fromString,toString)] = parsedResponse
                 return parsedResponse
             return None
 
 
-    def _parseResponse(response):
+    def parseResponse(self,response):
         try:
             timeInMinutes = response['routes'][0]['legs'][0]['duration']['text']
             distanceInMeters = response['routes'][0]['legs'][0]['distance']['text']

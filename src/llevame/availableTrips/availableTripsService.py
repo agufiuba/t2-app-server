@@ -3,7 +3,8 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 import logging
 import sys
-
+from shared_service.shared_server_service import SharedServerService
+from tripCost.tripCostService import TripCostService
 
 
 # Configuración de Log
@@ -17,15 +18,16 @@ class AvailableTripService:
         logging.info('Se inicializa el servicio con la db',extra=log_info)
         logging.info('URL de DB: ' + str(interfaces.get_mongo_uri()),extra=log_info)
         self.db = MongoClient(interfaces.get_mongo_uri())[interfaces.get_mongo_db_name()]
-        self.sharedService = interfaces.get_shared_server_service()
+        self.sharedService = SharedServerService()
         self.tripCostService = TripCostService()
+
     # fromPlace porque from es reservado de python
     def addTravel(self, email, data):
         user = self.sharedService.getUserFromEmail(email)
         # Si el user existe
         if user != None:
             logging.info('El usuario '+email+' sí se encuentra registrado',extra=log_info)
-            response = tripCostService.getCostAndDistance(email,data['from'],data['to'])
+            response = self.tripCostService.getCostDistanceTimeAndCost(email,data['from'],data['to'])
             if response != None:
                 self.db.trips.insert_one({'email':email,'from':data['from'],'to':data['to'],'km':response['distance']})
                 logging.info('Se agrego correctamente el viaje',extra=log_info)

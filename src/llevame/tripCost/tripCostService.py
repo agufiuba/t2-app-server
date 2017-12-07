@@ -17,12 +17,12 @@ class TripCostService():
         self.sharedService = sharedService
 
     def getCostDistanceTimeAndCost(self,email,fromString,toString):
-        response = self.googleMapService(fromString,toString)
-        if googleResponse != None:
-            logging.info('El string de distancia es el siguiente:'+googleResponse['distance'],extra=log_info)
+        response = self.googleMapService.getDistanceTimeAndPoints(fromString,toString)
+        if response != None:
+            logging.info('El string de distancia es el siguiente:'+response['distance'],extra=log_info)
             #Obtengo costo
-            cost = self.sharedService.getCostFromDistanceInKM(email,googleResponse['distance'].split('k')[0])['costo']
-            response['cost'] = cost
+            cost = self.sharedService.getCostFromDistanceInKM(email,response['distance'].split('k')[0])['costo']
+            response['cost'] = cost['costo']
             logging.info('Devolviendo el tiempo,costo,distancia y puntos',extra=log_info)
             return response
         else:
