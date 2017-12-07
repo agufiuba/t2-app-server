@@ -1,6 +1,11 @@
-
-
-# Los usuarios de la bdd de firebase_dummy. Son un pasajero y dos choferes.
+# import unittest
+# from my_firebase.firebase_dummy import FirebaseDummy
+# from shared_service.shared_service_dummy import SharedServiceDummy
+# from app_builder import build_app
+# from interfaces import Interfaces
+# import os
+#
+# # Los usuarios de la bdd de firebase_dummy. Son un pasajero y dos choferes.
 # users = [
 #     ("1", { 'id': 10, 'name': 'Abraham', 'last_name': 'Adams',
 #         'mail': 'abadams@gmail.com', 'type': 1, 'saldo': '0'},
@@ -73,22 +78,9 @@
 #         (code, data) = delete_user(self.app, non_existant_user)
 #         self.assertEqual(code, 400)
 #
-#     # TODO que no se pueda hacer logout de uno no logueado.
-#     # def test_logout_not_logged(self):
-#     #     (code, data) = delete_user(self.app, user[2])
-#     #     self.assertEqual(code, 400)
-#
-#     # TODO: Qué onda los logins múltiples?
 #     def test_login(self):
 #         (code, data) = post_user(self.app, users[2])
 #         self.assertEqual(code, 200)
-#
-#     # TODO que no se pueda loguear si no está en firebase.
-#     # def test_login_nonexistant(self):
-#     #     (code, data) = post_user(self.app, non_existant_user)
-#     #     self.assertEqual(code, 400)
-#
-#     # TODO: cuando ande el test_logout_not_logged, hacer un login, logout.
 #
 # if __name__ == '__main__':
 #     unittest.main()
