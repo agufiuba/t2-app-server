@@ -1,11 +1,11 @@
 import sys
 import logging
 from notification import notification_service as notificationService
-from my_firebase import firebase_service as firebaseService
-from user import user_service as userService
+from my_firebase.firebase_service import FirebaseService
+from user.user_service import UserService
 from tripCost.tripCostService import TripCostService
-from session import session_service as sessionService
-from drivers import drivers_service as driverService
+from session.session_service import SessionService
+from drivers.drivers_service import DriverService
 #Configuración del loggin
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
@@ -16,6 +16,10 @@ this = sys.modules[__name__]
 this.trips = {}
 this.withUser = {}
 tripCostService = TripCostService()
+userService = UserService()
+driverService = DriverService()
+sessionService = SessionService()
+firebaseService = FirebaseService()
 
 def addTrip(passengerID,driverID,fromPos,toPos):
     logging.info('Se esta agregando un nuevo viaje',extra=log_info)
@@ -30,7 +34,7 @@ def addTrip(passengerID,driverID,fromPos,toPos):
         '_to':toPos,
         '_passengerName':nameAndLasName['name'],
         '_passengerLastName':nameAndLasName['last_name'],
-        '_polyline':tripCostService.getGoogleResponse(getLatAndLngFromString(fromPos),getCostAndDistance(toPos))['points']
+        '_polyline':tripCostService.getCostDistanceTimeAndCost(getLatAndLngFromString(fromPos),getCostAndDistance(toPos))['points']
     }
     notificationService.notificate_user(driverID,data)
     return True
