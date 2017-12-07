@@ -1,4 +1,4 @@
-from session import session_service as sessionService
+from session.session_service import SessionService
 import requests
 import logging
 
@@ -8,6 +8,8 @@ keyServer = 'AAAAa-B0L4s:APA91bFGGWPnw2nHxvM7xaVN-S9sSKAajA7KAfwH2u65ytDxHkZ1n9u
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
+
+sessionService = SessionService()
 
 def notificate_user(userID,data):
     logging.info('Se esta notificando al usuario:'+userID,extra=log_info)

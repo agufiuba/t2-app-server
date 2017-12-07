@@ -21,5 +21,6 @@ class DriverService:
         return True
 
     def delete_driver(self, ID):
-        self.drivers.remove(ID)
+        if ID in self.drivers:
+            self.drivers.remove(ID)
         return True
