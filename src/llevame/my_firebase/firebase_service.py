@@ -27,8 +27,9 @@ class FirebaseService:
         self.default_app = firebase_admin.initialize_app(cred, {
         'databaseURL': 'https://t2t2-9753f.firebaseio.com'
         })
-
-
+        self.cacheUIDEmail = {}
+        self.cacheEmailUID = {}
+        
     def validate_token(self,id_token):
         logging.info('Validando token',extra=log_info)
         try:
