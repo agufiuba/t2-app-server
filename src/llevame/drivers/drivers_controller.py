@@ -2,8 +2,8 @@ from flask import Blueprint,request,jsonify
 from .drivers_service import DriverService
 import logging
 from . import drivers_request_validator as validator
-from utils import positionTransformer
 from my_firebase.firebase_service import FirebaseService
+from utils.position import Position
 
 # Configuracion del loggin
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -27,7 +27,7 @@ def build_drivers_controller(interfaces):
             if validation != 'ok':
                 return jsonify({'message':validation}),400
             else:
-                passengerPosition = positionTransformer.parserStringToPosition(request.args.get('pos'))
+                passengerPosition = Position(request.args.get('pos'))
                 drivers = driverService.getDriversAroundFrom(passengerPosition)
                 return jsonify({'drivers':drivers}),200
         return jsonify({'message':'El token pasado no es valido'}),400

@@ -8,12 +8,21 @@ log_info = {'clientip': '192.168.0.1', 'service': 'driversService'}
 
 class DriverService:
     def __init__(self,firebaseService = FirebaseService()):
+        # Lista de Ids de conductores.
         self.drivers = []
         self.firebaseService = firebaseService
 
     def getDriversAroundFrom(self, passengerPosition):
-        logging.info('getDriversAroundFrom', extra=log_info)
-        return self.firebaseService.getDriversArounPosition(passengerPosition, self.drivers)
+        nearbyDriverIDsList = []
+        logging.info('Se están calculando las posiciones cercanas al pasajero', extra=log_info)
+
+        for driverID in self.drivers:
+            driverPosition = self.firebaseService.getPositionFromId(driverID)
+            if driverPosition.distance(passengerPosition) <= 100:
+                nearbyDriverIDsList.append({'id':driverID, 'pos':driverPosition})
+
+        logging.info('Devolviendo los choferes cercanos:'+ str(nearbyDriverIDsList), extra=log_info)
+        return nearbyDriverIDsList
 
     # El ID es firebase id
     def login_driver(self, ID):
@@ -21,6 +30,8 @@ class DriverService:
         return True
 
     def delete_driver(self, ID):
-        if ID in self.drivers:
+        try:
             self.drivers.remove(ID)
-        return True
+            return True
+        except ValueError:
+            return False
