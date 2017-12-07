@@ -7,7 +7,7 @@ from position.position_controller import build_position_controller
 from login.login_controller import build_login_controller
 from parameters.parametersController import build_parameters_controller
 from payment.paymentController import build_payment_controller
-
+from trips.trips_controller import tripsController
 from interfaces import Interfaces
 
 from shared_service.shared_server_service import SharedServerService
@@ -45,6 +45,7 @@ def build_app(interfaces = None):
     app.register_blueprint(build_position_controller())
     app.register_blueprint(build_login_controller(interfaces))
     app.register_blueprint(main_controller)
-    app.register_blueprint(build_parameters_controller(interfaces))
+    app.register_blueprint(build_parameters_controller())
     app.register_blueprint(build_payment_controller())
+    app.register_blueprint(tripsController)
     return app

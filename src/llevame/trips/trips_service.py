@@ -3,7 +3,7 @@ import logging
 from notification import notification_service as notificationService
 from my_firebase import firebase_service as firebaseService
 from user import user_service as userService
-from trips import tripCostService
+from tripCost.tripCostService import TripCostService
 from session import session_service as sessionService
 from drivers import drivers_service as driverService
 #Configuración del loggin
@@ -15,6 +15,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'tripsService'}
 this = sys.modules[__name__]
 this.trips = {}
 this.withUser = {}
+tripCostService = TripCostService()
 
 def addTrip(passengerID,driverID,fromPos,toPos):
     logging.info('Se esta agregando un nuevo viaje',extra=log_info)

@@ -12,7 +12,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
 
 
 
-class SharedServerService():
+class SharedServerService:
 
     token = ''
 
