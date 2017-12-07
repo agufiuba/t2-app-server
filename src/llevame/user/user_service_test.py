@@ -41,34 +41,34 @@ userService = UserService(sharedServerService)
 
 class TestUserService(unittest.TestCase):
     def test_the_add_user_should_return_true_when_the_data_have_correct_format(self):
-        assertTrue(userService.addUser(driver))
+        self.assertTrue(userService.addUser(driver))
 
     def test_the_add_user_should_return_false_when_the_data_have_incorrect_format_driver(self):
-        assertFalse(userService.addUser(driverIncomplet))
+        self.assertFalse(userService.addUser(driverIncomplet))
 
     def test_the_add_user_should_return_true_when_the_data_have_correct_format_passenger(self):
-        assertTrue(userService.add(passenger))
+        self.assertTrue(userService.add(passenger))
 
     def test_the_add_user_should_return_false_when_the_data_have_incorrect_format_passenger(self):
-        assertTrue(userService.add(passengerIncomplete))
+        self.assertTrue(userService.add(passengerIncomplete))
 
 
     def test_the_convertType_shoud_return_passenger(self):
-        assertTrue(userService.convertType(1) == 'passenger')
+        self.assertTrue(userService.convertType(1) == 'passenger')
 
     def test_the_convertType_shoud_return_driver(self):
-        assertTrue(userService.convertType(2) == 'driver')
+        self.assertTrue(userService.convertType(2) == 'driver')
 
 
     def test_getUser_should_filter_from_shared_response(self):
         copy = dict(driver)
         excepted = copy.pop('car')
-        assertTrue(userService.getUser('cristian3629@gmail.com') == excepted)
+        self.assertTrue(userService.getUser('cristian3629@gmail.com') == excepted)
 
     def test_getUser_should_filter_from_shared_response_again(self):
         copy = dict(passenger)
         excepted = copy.pop('card')
-        assertTrue(userService.getUser('cristian3629xx@gmail.com') == excepted)
+        self.assertTrue(userService.getUser('cristian3629xx@gmail.com') == excepted)
 
     def test_getUser_should_return_None_when_shared_returns_None(self):
-        assertTrue(userService.get('userNotExits@gmail.com') == None)
+        self.assertTrue(userService.get('userNotExits@gmail.com') == None)

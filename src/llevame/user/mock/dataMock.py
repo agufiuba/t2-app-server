@@ -35,7 +35,7 @@ passenger = {
 	"name":"cristian",
 	"last_name":"gonzalez",
 	"mail":"cristian3629xx@gmail.com",
-	"car":{
+	"card":{
 		"number":"xxx",
 		"typeCard":"xxx",
 		"securityCode":"xxx",
@@ -51,7 +51,7 @@ passengerIncomplete = {
 	"name":"cristian",
 	"last_name":"gonzalez",
 	"mail":"cristian3629xxx@gmail.com",
-	"car":{
+	"card":{
 		"number":"xxx",
 		"typeCard":"xxx",
 		"securityCode":"xxx",
