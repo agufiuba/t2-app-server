@@ -3,7 +3,7 @@ from user.user_service import UserService
 from shared_service.shared_server_service import SharedServerService
 from my_firebase.firebase_service import FirebaseService
 from user.mock.dataMock import driver,driverIncomplet,passenger,passengerIncomplete
-import mock
+from unittest import mock
 
 def addUserMock(data):
     if data == driver:
