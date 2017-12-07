@@ -19,7 +19,7 @@ class SessionService:
         session_list.append(sessionToken)
         sessions[userID] = session_list
 
-        def getSessionsList(self,userID):
-            if userID not in sessions.keys():
-                return []
-            return sessions[userID]
+    def getSessionsList(self,userID):
+        if userID not in sessions.keys():
+            return []
+        return sessions[userID]
