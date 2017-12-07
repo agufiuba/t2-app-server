@@ -22,7 +22,7 @@ class TripCostService():
             logging.info('El string de distancia es el siguiente:'+response['distance'],extra=log_info)
             #Obtengo costo
             cost = self.sharedService.getCostFromDistanceInKM(email,response['distance'].split('k')[0])['costo']
-            response['cost'] = cost['costo']
+            response['cost'] = cost
             logging.info('Devolviendo el tiempo,costo,distancia y puntos',extra=log_info)
             return response
         else:
