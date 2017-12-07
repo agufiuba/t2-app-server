@@ -1,5 +1,5 @@
 import logging
-from my_firebase import firebase_service as firebaseService
+from my_firebase.firebase_service import FirebaseService
 from shared_service.shared_server_service import SharedServerService
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
@@ -8,7 +8,7 @@ log_info = {'clientip': '192.168.0.1', 'service': 'userService'}
 
 class UserService:
 
-    def __init__(self, sharedService = SharedServerService()):
+    def __init__(self, sharedService = SharedServerService(),firebaseService = FirebaseService() ):
         self.sharedService = sharedService
 
     def addUser(self, user):
@@ -36,6 +36,6 @@ class UserService:
         return 'driver'
 
     def getDriverFromUID(self,UID):
-        email = firebaseService.getEmailFromUid(UID)
+        email = self.firebaseService.getEmailFromUid(UID)
         car = self.sharedService.getCarInfo(email)
         return {'car':car}

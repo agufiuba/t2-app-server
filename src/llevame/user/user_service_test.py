@@ -3,6 +3,7 @@ from user.user_service import UserService
 from shared_service.shared_server_service import SharedServerService
 from my_firebase.firebase_service import FirebaseService
 from user.mock.dataMock import driver,driverIncomplet,passenger,passengerIncomplete
+import mock
 
 def addUserMock(data):
     if data == driver:
@@ -31,8 +32,8 @@ def getUserFromEmailMock(email):
 sharedServerService = SharedServerService()
 firebaseService = FirebaseService()
 
-sharedServerService.addUser = MagicMock(side_efect=addUserMock)
-sharedServerService.getUserFromEmail =  MagicMock(side_efect = getUserFromEmailMock)
+sharedServerService.addUser = mock.MagicMock(side_efect=addUserMock)
+sharedServerService.getUserFromEmail =  mock.MagicMock(side_efect = getUserFromEmailMock)
 
 userService = UserService(sharedServerService)
 
