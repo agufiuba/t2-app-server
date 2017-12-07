@@ -1,7 +1,9 @@
 import unittest
-from session import session_service as sessionService
+from session.session_service import SessionService
 
-#TODO: arregla los test
+
+sessionService = SessionService()
+
 
 class TestSessionService(unittest.TestCase):
     def test_the_session_list_should_be_empty_when_the_userID_is_not(self):
