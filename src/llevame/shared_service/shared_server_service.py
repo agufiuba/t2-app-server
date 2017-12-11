@@ -3,13 +3,11 @@ import json
 from shared_service.dataTransformatorQueryParams import BodyTransformatorQueryParam
 import logging
 import os
-
+from time import sleep
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
-
-
 
 
 class SharedServerService:
@@ -31,10 +29,10 @@ class SharedServerService:
                     res = requests.get(self.shared_server_addr+"/login")
                     code = res.status_code
                     SharedServerService.token = res.headers['Authorization']
-                except ConnectionError:
-                    logging.info('Se rechazó conexion',extra=log_info)
-        logging.info('El token es: ' + SharedServerService.token,extra=log_info)
-        logging.info('El inicio fue OK',extra=log_info)
+                except requests.exceptions.ConnectionError:
+                    logging.info('Problemas de conexión con el Shared Server. Intentando de nuevo en 10 segundos...',extra=log_info)
+                    sleep(10)
+        logging.info('Conexión exitosa. El token de este app-server es: ' + SharedServerService.token,extra=log_info)
 
     def addUser(self,user):
         logging.info('Agregando un usuario',extra=log_info)
