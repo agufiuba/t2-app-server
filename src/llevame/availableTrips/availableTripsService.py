@@ -23,6 +23,7 @@ class AvailableTripService:
     # fromPlace porque from es reservado de python
     def addTravel(self, email, data):
         # Si el user existe
+        user = self.sharedService.getUserFromEmail(email)
         if user != None:
             logging.info('El usuario '+email+' sí se encuentra registrado',extra=log_info)
             response = self.tripCostService.getCostDistanceTimeAndCost(email,data['from'],data['to'])
