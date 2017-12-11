@@ -8,18 +8,17 @@ log_info = {'clientip': '192.168.0.1', 'service': 'sessionService'}
 
 
 class SessionService:
-    def __init__(self):
-        self.sessions = {}
+    sessions = {}
 
     def addSession(self,userID,sessionToken):
-        logging.info('Guardando una session',extra=log_info)
+        logging.info('Guardando una session (userID: ' + userID + ', sessionToken: ' + sessionToken + ').', extra=log_info)
         session_list = []
-        if userID in self.sessions.keys():
-            session_list = self.sessions[userID]
+        if userID in SessionService.sessions.keys():
+            session_list = SessionService.sessions[userID]
         session_list.append(sessionToken)
-        self.sessions[userID] = session_list
+        SessionService.sessions[userID] = session_list
 
     def getSessionsList(self,userID):
-        if userID not in self.sessions.keys():
+        if userID not in SessionService.sessions.keys():
             return []
-        return self.sessions[userID]
+        return SessionService.sessions[userID]

@@ -33,7 +33,7 @@ class SharedServerService:
                     SharedServerService.token = res.headers['Authorization']
                 except ConnectionError:
                     logging.info('Se rechazó conexion',extra=log_info)
-        logging.info('El token es:' + self.token,extra=log_info)
+        logging.info('El token es: ' + SharedServerService.token,extra=log_info)
         logging.info('El inicio fue OK',extra=log_info)
 
     def addUser(self,user):
@@ -72,14 +72,14 @@ class SharedServerService:
         url = self.shared_server_addr+'/costos/'+userEmail+'/'+str(distanceInKM)
         logging.info('Realizo request al shared server con el siguiente request'+url,extra=log_info)
         #Realizando request
-        res = requests.get(url,headers = {'Authorization':self.token})
+        res = requests.get(url,headers = {'Authorization':SharedServerService.token})
         return json.loads(res.text)
 
     def getPayMethods(self):
         logging.info('Llegó una solicitud para poder obtener los medios de pagos',extra=log_info)
         url = self.shared_server_addr+'/paymethods'
         logging.info('Se esta enviando un GET a la siguiente url'+url,extra=log_info)
-        res = requests.get(url,headers = {'Authorization':self.token})
+        res = requests.get(url,headers = {'Authorization':SharedServerService.token})
         return json.loads(res.text)
 
 
@@ -88,7 +88,7 @@ class SharedServerService:
         url = self.shared_server_addr+'/cars/'+email
         logging.info('Realizo request al shared server con el siguiente request'+url,extra=log_info)
         #Realizando request
-        res = requests.get(url,headers = {'Authorization':self.token})
+        res = requests.get(url,headers = {'Authorization':SharedServerService.token})
         return json.loads(res.text)
 
     # POST al sharedServer/trips.
@@ -97,5 +97,5 @@ class SharedServerService:
         url = self.shared_server_addr+'/trips/'+ userEmail + "/" + driverEmail \
             + "/" + distance.split(" ")[0] + "?" + "metodo=" + paymethod
         logging.info("POST a la siguiente url: "+ url, extra=log_info)
-        res = requests.post(url,headers = {'Authorization': self.token})
+        res = requests.post(url,headers = {'Authorization': SharedServerService.token})
         return res.status_code == 200 or res.status_code == 201
