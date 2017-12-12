@@ -1,4 +1,5 @@
 from session.session_service import SessionService
+import json
 import requests
 import logging
 
@@ -7,7 +8,7 @@ keyServer = 'AAAAa-B0L4s:APA91bFGGWPnw2nHxvM7xaVN-S9sSKAajA7KAfwH2u65ytDxHkZ1n9u
 
 FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
-log_info = {'clientip': '192.168.0.1', 'service': 'sharedService'}
+log_info = {'clientip': '192.168.0.1', 'service': 'Notification Service'}
 
 sessionService = SessionService()
 
@@ -23,13 +24,12 @@ def notificate_user(userID,data):
 def notificate(sessionID,data):
 
     data_to_active_listener = {
-        'to':sessionID,
-        'android':{
-    	   'ttl':'86400s',
-    		    'notification' : {
-        		  'data':data
-    		     }
-    	 }
+        'to': sessionID,
+        "data": data
     }
-    pv = requests.post('https://fcm.googleapis.com/fcm/send',headers={'Content-Type':'application/json','Authorization':'key='+keyServer},data=data_to_active_listener)
-    return True
+    # logging.info("JSON a enviar a Firebase para notificar: " + str(data_to_active_listener), extra=log_info)
+    res = requests.post('https://fcm.googleapis.com/fcm/send',\
+        headers = {'Content-Type':'application/json','Authorization':'key='+keyServer},\
+        data = json.dumps(data_to_active_listener))
+    logging.info("Se recibe de firebase [código " + str(res.status_code) + "]: " + res.text, extra=log_info)
+    return res.status_code == 200
