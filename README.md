@@ -3,37 +3,59 @@
 
 # t2-app-server
 
+App Server para Taller de Programación II (7552 - FIUBA). Existe una versión desplegada en heroku (`http://t2-appserver.herokuapp.com`), pero en este repositorio se encuentran todas las herramientas necesarias para ejecutarlo localmente utilizando Docker.
+
+## Prerrequisitos
+
+-   Instalación de [Docker](https://docs.docker.com/engine/installation/).
+-   Este documento describe el uso en consolas estilo bash o zsh (típicamente encontradas en linux o mac). No ha sido probado en Windows.
 
 ## Instalación
 
-La aplicación requiere que exista una red de docker llamada "ubernet". Para crearla debe ejecutarse:
+1.  Descargar este repositorio.
 
--   `docker network create ubernet`
+    ```bash
+    git clone https://github.com/agufiuba/t2-app-server
+    ```
 
-Luego, para construir la aplicación:
+2.  La aplicación requiere que exista una red de docker llamada "ubernet". Si esta no está creada (verificable con `docker network ls`) debe ejecutarse:
 
--   `docker-compose build`
+    ```
+    docker network create ubernet
+    ```
+
+3.  Luego, si no se desean configuraciones adicionales, para construir la aplicación se utiliza:
+
+    ```
+    docker-compose build
+    ```
+
+## Configuración
+
+Las variables obligatorias a las que no se les de valor toman sus valores por defecto, especificados en el archivo `.env`.
+
+La única configuración obligatoria en el App Server es la variable de entorno `PORT`, que explicita el puerto al cual se ligará el servidor cuando sea levantado. Su valor por defecto es `3000`.
+
+Por ejemplo, si se ejecuta `export PORT=5000` luego se accederá a la API a través de `localhost:5000`. Si la aplicación se usa en simultáneo con el [Shared Server](https://github.com/agufiuba/t2-shared-server) deben estar ligados a puertos distintos.
+
+<!-- TODO agregar variables no obligatorias  -->
 
 ## Ejecución
 
-Se explicita el puerto al cual se ligará el servidor al levantarlo:
-
--   `export PORT=<puerto>`
-
-Por ejemplo, si se ejecuta `export PORT=3000` luego se accederá a la API a través de `localhost:3000`. Si la aplicación se usa en simultáneo con el `shared-server` deben estar ligados a puertos distintos.
-
 Finalmente, para levantar el servidor:
 
--   `docker-compose up`
+```
+docker-compose up
+```
 
 ## Servicios disponibles
 
-_Nota sobre las direcciones:_ La dirección base (de ahora en adelante `app_uri`) dependerá de si se accede a un App Server local en Docker o al desplegado en heroku, así como desde dónde se accede.
+_Nota sobre las direcciones:_ la dirección base (de ahora en adelante `app_uri`) dependerá de si se accede a un App Server local en Docker o al desplegado en heroku, así como desde dónde se accede.
 
 -   **Docker**:
-    -   Para android, `http://<ip_pc>:<PORT>` donde `<ip_pc>` es la dirección IP de la computadora ejecutando el container del App Server en la red local.
-    -   Si se accede desde otro container en Docker en la Ubernet, como un Shared Server, se puede utilizar la dirección `http://app-server:<PORT>`, ya que Docker resuelve las ips de sus servicios con sus nombres.
--   **Heroku**: `http://t2-appserver.herokuapp.com`.
+    -   Para android, `<ip_pc>:<PORT>` donde `<ip_pc>` es la dirección IP de la computadora ejecutando el container del App Server en la red local.
+    -   Si se accede desde otro container en Docker en la Ubernet, como un Shared Server, se puede utilizar la dirección `app-server:<PORT>`, ya que Docker resuelve las ips de sus servicios con sus nombres.
+-   **Heroku**: `t2-appserver.herokuapp.com`.
 
 El valor por defecto de `PORT`, como es explicado más arriba, es 3000.
 
@@ -85,7 +107,7 @@ Este se encarga todo respecto al usuario, registro, etc.
     }
     ```
 
-+   URL: `http://uri:port/user/`
++   URL: `http://app_uri:port/user/`
 
 #### Actualizar información usuario
 
@@ -103,7 +125,7 @@ Este se encarga todo respecto al usuario, registro, etc.
 Los puntos suspensivos serian los datos que se quieren actualizar.
 <!-- TODO Mejorar esto.  -->
 
-+   URL: `http://uri:port/user/`
++   URL: `http://app_uri:port/user/`
 
 #### Ver información de Usuario
 
@@ -112,7 +134,7 @@ Los puntos suspensivos serian los datos que se quieren actualizar.
     ```
     {}
     ```
-+   URL: `http://uri:port/user/{id_user}`
++   URL: `http://app_uri:port/user/{id_user}`
 
 
 +   Respuesta si es un pasajero
@@ -128,7 +150,7 @@ Los puntos suspensivos serian los datos que se quieren actualizar.
 
 #### Obtener información del auto de un usuario
 
-+   URL: `http://uri:port/user/driver/<uid>`
++   URL: `http://app_uri:port/user/driver/<uid>`
 +   verbo REST: GET
 
 +   Respuesta:
@@ -250,7 +272,7 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
       }
     ```
 
-+   URL: `http://uri:port/availableTrip`
++   URL: `http://app_uri:port/availableTrip`
 
 +   Response:
 
