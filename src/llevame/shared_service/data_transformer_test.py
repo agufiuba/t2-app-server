@@ -14,12 +14,12 @@ class TestDataTransformer(unittest.TestCase):
 
     def test_the_result_should_be_equals(self):
         data = {'name':'someName','last_name':'someLastName','email':'someEmail','type':'passenger'}
-        self.assertEqual(transformer.transformate(data), 'name=someName&last_name=someLastName&email=someEmail&type=1&')
+        self.assertEqual(transformer.transformate(data), 'email=someEmail&last_name=someLastName&name=someName&type=1&')
 
     def test_the_result_shoud_be_equals_when_have_a_sub_object(self):
         data = {'name':'someName','last_name':'someLastName','email':'someEmail','card':{'number':'xx'}}
-        self.assertEqual(transformer.transformate(data), 'name=someName&last_name=someLastName&email=someEmail&number=xx&')
+        self.assertEqual(transformer.transformate(data), 'number=xx&email=someEmail&last_name=someLastName&name=someName&')
 
     def test_wrong_type_returns_0(self):
         data = {'name':'someName','last_name':'someLastName','email':'someEmail','type':'pasajero'}
-        self.assertEqual(transformer.transformate(data), 'name=someName&last_name=someLastName&email=someEmail&type=0&')
+        self.assertEqual(transformer.transformate(data), 'email=someEmail&last_name=someLastName&name=someName&type=0&')
