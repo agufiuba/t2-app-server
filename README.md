@@ -8,6 +8,8 @@ App Server para Taller de Programación II (7552 - FIUBA). Existe una versión d
 ## Prerrequisitos
 
 -   Instalación de [Docker](https://docs.docker.com/engine/installation/).
+-   Instalación de [Docker Compose](https://docs.docker.com/compose/install/).
+-   Instalación de [Shared Server](https://github.com/agufiuba/t2-shared-server). Además, para la correcta ejecución de este servidor, el Shared Server debe estar levanado en Docker.
 -   Este documento describe el uso en consolas estilo bash o zsh (típicamente encontradas en linux o mac). No ha sido probado en Windows.
 
 ## Instalación
@@ -59,11 +61,13 @@ _Nota sobre las direcciones:_ la dirección base (de ahora en adelante `app_uri`
 
 El valor por defecto de `PORT`, como es explicado más arriba, es 3000.
 
-### Servicio de usuarios (`/user` y `/driver`)
+### Servicio de usuarios (`/user`)
 
 Este se encarga todo respecto al usuario, registro, etc.
 
 #### Registrar Usuario
+
++   URL: `http://app_uri:port/user/`
 
 +   Verbo REST: POST
 
@@ -107,50 +111,59 @@ Este se encarga todo respecto al usuario, registro, etc.
     }
     ```
 
-+   URL: `http://app_uri:port/user/`
++   Response: `200` si fue exitoso el registro, `400` si hubo algún problema.
 
 #### Actualizar información usuario
 
++   URL: `http://app_uri:port/user/`
+
 +   Verbo REST: PUT
+
 +   Body:
 
     ```
     {
       email: 'julano.casandro@gmail',
-      ...
-      ....
+      [name: 'xxxxx'],
+      [last_name: 'xxxxx'],
+      [email: 'xxxx'],
+      [...]
     }
     ```
 
-Los puntos suspensivos serian los datos que se quieren actualizar.
-<!-- TODO Mejorar esto.  -->
+    Se utiliza el mail como identificador. El resto de los campos serán los que se quieran actualizar. Son opcionales y son los mismos que al efectuar el registro.
 
-+   URL: `http://app_uri:port/user/`
++   Response: `200` si fue exitoso el registro, `400` si hubo algún problema.
+
 
 #### Ver información de Usuario
 
++   URL: `http://app_uri:port/user/{id_user}`
+
 +   Verbo REST: GET
+
 +   Body:
     ```
     {}
     ```
-+   URL: `http://app_uri:port/user/{id_user}`
 
-
-+   Respuesta si es un pasajero
++   Response: `200` con los datos de usuario si es encontrado, `400` si hubo un problema o el usuario no está registrado. Ejemplo para un pasajero:
 
     ```
     {
-        type: 'passenger'
-        name: 'name',
-        last_name: 'apellido',
-        email: 'email',
+        "id": 1,
+        "name": "Armando",
+        "last_name": "Gales",
+        "mail": "agales@gmail.com",
+        "type": "passenger",
+        "saldo": "2500.0"
     }
     ```
 
 #### Obtener información del auto de un usuario
 
 +   URL: `http://app_uri:port/user/driver/<uid>`
+
 +   verbo REST: GET
 
 +   Respuesta:
@@ -169,122 +182,179 @@ Los puntos suspensivos serian los datos que se quieren actualizar.
     }
     ```
 
+### Servicio de login (`/login`)
+
+#### Loguear un usuario
+
++   URL: `http://app_uri/login`
+
++   Verbo REST: POST
+
++   Header:
+
+    ```
+    {
+      'Authorization':'xxxxxxx',
+      'Session': 'xxxxx',
+      'Content-Type':'application/json'
+    }
+    ```
+
+    Es importante notar que se envía, además del token de Firebase en Authorization, el SessionID (también de Firebase), que será utilizado más adelante para enviar mensajes particulares por FCM.
+
++   Response: `200` en caso de éxito, `400` en caso de que el usuario no esté registrado en el Shared Server.
+
 ### Servicio de viajes (`/trips`)
 
 #### Agregar un viaje que se va a realizar
 
-+   URL: `/trips`
+Además de agregarlo notifica al chofer mediante el sistema de notificaciones de Firebase (FCM) con los datos del viaje.
+
++   URL: `http://app_uri/trips`
 +   Verbo REST: POST
 +   Header:
 
     ```
-    {'Authorization':'xxxx'}
+    {
+      'Authorization':'xxxxxxx',
+      'Content-Type':'application/json'
+    }
     ```
 
 +   Body:
     ```
     {
       'driverID':'xxxx',
-      'from':'xxxx',
-      'to':'xxxxx'
+      'from': 'lat/lng: (-34.6220855,-58.3832781)',
+    	'to': 'lat/lng: (-35.6220855,-58.3832781)',
+      'paymentMethod': ['cash', 'card']
     }
     ```
 
+Advertencia: en plataformas como android el campo `from` y el `to` deben escribir el espacio entre el ":" y el "(" como un "%20".
+
++   Response: `200` si el viaje se agregó correctamente, `400` si hubo un error al tratar de agregarlo o si hubo un error de autenticación.
+
 #### Avisar que el chofer esta viajando
 
-+   URL: `/trips/driverTraveling`
++   URL: `http://app_uri/trips/driverTraveling`
 +   Verbo REST: PUT
 +   Header :
 
     ```
-    {'Authorization':'xxxx'}
+    {
+      'Authorization':'xxxxxxx',
+      'Content-Type':'application/json'
+    }
     ```
 
-+   Response:
++   Response: `200` en caso de éxito. `400` si hubo error de autenticación.
 
     ```
     {'message':'Se actualizo el estado del vieje'}
     ```
 
-Cuando se realiza el request, se manda notificacion tanto al chofer como el pasajero, y en data se le manda el sessionList
++   Notificaciones:
+    Le envía por FCM los Session ID del chofer al pasajero y del pasajero al chofer para que puedan interactuar, por ejemplo, con el chat.
 
+    La notificacion tiene como "data" el siguiente formato:
 
-La notificacion tiene como data el siguiente formato:
-<!-- TODO verificar -->
     ```
-    {'sessionIDs':[1,2,3,4,5]}
+    {'sessionIDs': [session_id_1, session_id_2, session_id_3]}
     ```
 
-### Servicio de choferes
+### Servicio de choferes (`/driver`)
 
 #### Obtener los choferes disponibles.
 
++   URL: `/drivers?pos=lat/lng: (-34.6220855,-58.3832781)`. Se mantiene la recomendación de agregar `%20` en lugar de espacio para plataformas como Android.
+
 +   Verbo REST: GET
+
 +   Header:
 
     ```
-    {'Authorization':'xxxx'}
+    {
+      'Authorization':'xxxxxxx',
+      'Content-Type':'application/json'
+    }
     ```
 
-+   URL: /drivers?pos=lat/lng: (-34.6220855,-58.3832781)
-+   Response: La lista de los id de los drivers cercanos al pasajero
-    <!--  TODO verificar -->
++   Response: en caso de éxito, código `200` y la lista de los id de los drivers cercanos al pasajero. De estos en particular se obtiene el ID y la posición (en formato "lat;long"):
 
     ```
-    { 'drivers': [id1,id2,id3] }
+    {
+      'drivers': [
+        {'id': id1, 'pos': lat;long},
+        {'id': id2, 'pos': lat;long},
+        {'id': id3, 'pos': 34;50}
+      ]
+    }
     ```
+
+    En caso de falla (request inválido o error de autenticación), se devuelve un `400`.
 
 #### Agregar un chofer disponible.
 
-+   URL: `/drivers`
++   URL: `http://app_uri/drivers`
 +   Verbo REST: POST
 +   Header:
 
     ```
-    {'Authorization':'xxxx'}
+    {
+      'Authorization':'xxxxxxx',
+      'Content-Type':'application/json'
+    }
     ```
 
-+   Response:
++   Response: `200`
 
     ```
     {'message': 'Se agrego de manera correcta al chofer de xxxx'}
     ```
 
-### Servicio de posicionamiento
+<!-- ### Servicio de posicionamiento
 
-Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta.
+Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta. -->
 
-### Servicio de viajes disponibles
+### Servicio de viajes disponibles (`/availableTrip`)
 
 #### Agregar un viaje nuevo
 
+Se obtienen los datos de un viaje nuevo dados el origen y el destino.
+
++   URL: `http://app_uri:port/availableTrip`
+
 +   Verbo REST: PUT
-+   Body:
-    <!-- TODO verificar -->
+
++   Headers:
+
     ```
-      {
-        'Authorization':'xxxxxxx',
-        'Content-Type':'application/json'
-      }
+    {
+      'Authorization':'xxxxxxx',
+      'Content-Type':'application/json'
+    }
+    ```
+
++   Body:
+
+    ```
       {
         'from': '-34.617952,-58.385983',
         'to': '-34.617952,-58.385983',
       }
     ```
 
-+   URL: `http://app_uri:port/availableTrip`
 
 +   Response:
 
     En caso de que el usuario no exista se devuelve un `400` con el siguiente body:
 
     ```
-    {
-      message: 'El usuario no existe'.
-    }
+    { message: 'El usuario no existe'. }
     ```
 
-    En caso de que el usuario exista
+    En caso de que el usuario exista, un `200` con:
 
     ```
     {
@@ -295,6 +365,7 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
     }
     ```
 
+<!--
 +   Verbo REST: GET
 +   Body:
 
@@ -327,33 +398,40 @@ Corrobar que está realizando el viaje, y la distancia y tiempo de manera exacta
         }
       ]
     }
+    ``` -->
+
+### Servicio de Parámetros
+
+Se utiliza para obtener los valores posibles para elegir sobre los parámetros de un auto.
+
++   URL's:
+
+    +   `http://app_uri/parameters/car/state`
+    +   `http://app_uri/parameters/car/music`
+    +   `http://app_uri/parameters/car/model`
+    +   `http://app_uri/parameters/car/colour`
+    +   `http://app_uri/parameters/car/air_conditioner`
+
++   Verbo REST: GET
+
++   Response: `200` y los datos pedidos. Ejemplo para "model":
+
+    ```
+    {
+      'parameters': [
+        'Ford Fiesta',
+        'Chevrolet S10',
+        'Toyota Hilux',
+        'Fiat Palio',
+        'Renault Scenic'
+      ]
+    }
     ```
 
-### Servicio de Direccionamiento
+## Tests
 
-Se utilizará para permitir conocer los caminos disponibles.
+Para ejecutar las pruebas automatizadas de forma local, debe primero levantarse el servidor en docker, y luego ejecutarse:
 
-### Servicio de parametros
-
-Se utiliza para obtener los parametros posibles
-
-URL's:
-+   `http://localhost:3000/parameters/car/state`
-+   `http://localhost:3000/parameters/car/music`
-+   `http://localhost:3000/parameters/car/model`
-+   `http://localhost:3000/parameters/car/colour`
-+   `http://localhost:3000/parameters/car/air_conditioner`
-
-Response:
-
-    ```
-    { parameters : [......] }
-    ```
-
-## Uri's disponibles
-
-+   `/user`
-+   `/travels`
-+   `/position`
-+   `/drivers`
-+   `/path`
+```
+docker-compose exec -ti t2appserver_app-server_1 sh /as/src/test.sh
+```

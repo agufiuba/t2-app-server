@@ -32,8 +32,4 @@ def build_available_trips_controller(interfaces):
             return jsonify(response),200
         return jsonify({'message':'Hubo un error al tratar de agregar un nuevo viaje disponible '+email}),400
 
-    @availableTripsController.route('/availableTrip',methods=['GET'])
-    def getAvailableTravels():
-        return jsonify({'availableTrips':availableTripsService.getAvailableTravels()}),200
-
     return availableTripsController
