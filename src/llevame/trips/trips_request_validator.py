@@ -6,8 +6,6 @@ logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'tripsRequestValidator'}
 
 
-
-
 def validate(request):
     logging.info('Validando request',extra=log_info)
     json = request.get_json()
@@ -20,5 +18,12 @@ def validate(request):
     if 'to' not in json:
         logging.info('No se encuentra el <to> ',extra=log_info)
         return 'El <to> no se encuentra, por favor verifique eso'
+    if 'paymentMethod' not in json:
+        logging.info('No se encuentra el <paymentMethod> ',extra=log_info)
+        return 'El <paymentMethod> no se encuentra, por favor verifique eso'
+    metodo = json['paymentMethod']
+    if not metodo in ["cash", "card"]:
+        logging.info('El método de pago "' + metodo + '" no es válido. Debe ser "cash" o "card").')
+        return 'El método de pago "' + metodo + '" no es válido. Debe ser "cash" o "card").'
     logging.info('El request es valido',extra=log_info)
     return 'ok'

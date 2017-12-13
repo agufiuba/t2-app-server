@@ -5,10 +5,9 @@ logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'userValidator'}
 
 
-def validateAddUserRequest(request):
+def validateAddUserRequest(data):
     fields_of_add_user_request = ['type','name','last_name','mail']
     logging.info('Validando request para agregar user',extra=log_info)
-    data = request.get_json()
     for field in fields_of_add_user_request:
         if field not in data:
             logging.info('Falta el campo '+field+' en el request, devolviendo un 400',extra=log_info)
@@ -49,7 +48,7 @@ def validateField(fieldName,fieldsToValidate,data):
 
 def validate_update_user_request(data):
     logging.info('Validando un request para actualizar informacion de un user',extra=log_info)
-    data = request.get_json()
     if 'id' not in data:
         logging.info('Falta el campo id dentro del request para actualizar usuario, devolviendo 400',extra=log_info)
+        return 'Falta el campo id dentro del body'
     return 'ok'

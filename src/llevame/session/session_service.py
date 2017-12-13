@@ -7,20 +7,18 @@ logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'sessionService'}
 
 
-this = sys.modules[__name__]
-this.sessions = {}
+class SessionService:
+    sessions = {}
 
+    def addSession(self,userID,sessionToken):
+        logging.info('Guardando una session (userID: ' + userID + ', sessionToken: ' + sessionToken + ').', extra=log_info)
+        session_list = []
+        if userID in SessionService.sessions.keys():
+            session_list = SessionService.sessions[userID]
+        session_list.append(sessionToken)
+        SessionService.sessions[userID] = session_list
 
-def addSession(userID,sessionToken):
-    logging.info('Guardando una session',extra=log_info)
-    session_list = []
-    if userID in sessions.keys():
-        session_list = sessions[userID]
-    session_list.append(sessionToken)
-    sessions[userID] = session_list
-    return True;
-
-
-
-def getSessionsList(userID):
-    return sessions[userID]
+    def getSessionsList(self,userID):
+        if userID not in SessionService.sessions.keys():
+            return []
+        return SessionService.sessions[userID]

@@ -1,5 +1,4 @@
 from flask import Blueprint,request,jsonify
-from .parametersService import ParametersService
 import logging
 
 
@@ -8,10 +7,7 @@ FORMAT = "%(asctime)-15s    %(service)-8s     %(message)s"
 logging.basicConfig(format=FORMAT,level=logging.INFO)
 log_info = {'clientip': '192.168.0.1', 'service': 'parametersController'}
 
-def build_parameters_controller(interfaces):
-    # Para cuando efectivamente esté implementado el servicio.
-    parametersService = ParametersService(interfaces)
-
+def build_parameters_controller():
 
     #creando un controlador
     parameters_controller = Blueprint('parameters_controller',__name__)
